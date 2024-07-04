@@ -4,7 +4,40 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/scene manager.unity
+    guid: 05dbbb49ebaa20d4b9d8efa6557d1ebe
+  - enabled: 1
+    path: Assets/Scenes/fixed screen 3.unity
+    guid: b6d6d7119633818469f99cf7ea6003b3
+  - enabled: 1
+    path: Assets/Scenes/fixed screen 4.unity
+    guid: 052ae6c4e2768bd498f65f9290dfc8ec
+  - enabled: 1
+    path: Assets/Scenes/fixed screen.unity
+    guid: 4671fbb5da0d04c47bde2e9cfcafe00f
+  - enabled: 1
+    path: Assets/Scenes/head_track_screen.unity
+    guid: 5d5e19b8421980547a871b5320e1721a
+  - enabled: 1
+    path: Assets/Scenes/move with person.unity
+    guid: a9218c0f5a33cfe4680a53ae6bdcbc3c
+  - enabled: 1
+    path: Assets/Scenes/pinch.unity
+    guid: 9bd420d260d038b48be7f397457452a6
+  - enabled: 1
+    path: Assets/Scenes/project on palm.unity
+    guid: 26de94b834ab346459a912920bed9bb7
+  - enabled: 1
+    path: Assets/Scenes/up from palm.unity
+    guid: 1cbcfa6ca12cb8747a31b78361fb138c
+  - enabled: 1
+    path: Assets/Scenes/wrist.unity
+    guid: ddd8a6cf7ec50134faab602e6d4acae1
+  - enabled: 1
+    path: Assets/Scenes/zero pinch.unity
+    guid: bcfa96a1360fd3d44ba350da1f157077
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 70a3939c33cdddf48975072d47e634b6, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8244b43e166900844a5897876059b941, type: 2}

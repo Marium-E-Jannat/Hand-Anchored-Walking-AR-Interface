@@ -1479,6 +1479,7 @@ GameObject:
   - component: {fileID: 683795554}
   - component: {fileID: 683795553}
   - component: {fileID: 683795552}
+  - component: {fileID: 683795556}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1570,6 +1571,18 @@ RectTransform:
   m_AnchoredPosition: {x: -0.097, y: 0.028}
   m_SizeDelta: {x: 492.3974, y: 321.8603}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &683795556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683795551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c500bc0f9deae2408a0fad2249d3c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &699482115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2168138018087651771, guid: f54012181eacade4ea242c65f804720f, type: 3}
@@ -2969,11 +2982,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Eye: 1
-  ConfidenceThreshold: 0.5
-  ApplyPosition: 0
+  ConfidenceThreshold: 0
+  ApplyPosition: 1
   ApplyRotation: 1
   ReferenceFrame: {fileID: 0}
-  TrackingMode: 0
+  TrackingMode: 1
 --- !u!114 &1410148041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3010,7 +3023,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   handUsedForPinchSelection: {fileID: 1594560732}
-  mockHandUsedForPinchSelection: 1
+  mockHandUsedForPinchSelection: 0
   allowPinchSelection: 1
 --- !u!120 &1410148043
 LineRenderer:
@@ -3064,8 +3077,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0033111572
-        value: 0.045804977
+        time: 0.070194244
+        value: 0.038816452
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -3356,11 +3369,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Eye: 0
-  ConfidenceThreshold: 0.5
-  ApplyPosition: 0
+  ConfidenceThreshold: 0
+  ApplyPosition: 1
   ApplyRotation: 1
   ReferenceFrame: {fileID: 0}
-  TrackingMode: 0
+  TrackingMode: 1
 --- !u!114 &1594056269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3397,7 +3410,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   handUsedForPinchSelection: {fileID: 1594560732}
-  mockHandUsedForPinchSelection: 1
+  mockHandUsedForPinchSelection: 0
   allowPinchSelection: 1
 --- !u!120 &1594056271
 LineRenderer:
@@ -3451,8 +3464,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.007633209
+        time: 0.070150346
+        value: 0.03912735
         inSlope: 0
         outSlope: 0
         tangentMode: 0
