@@ -49,6 +49,10 @@ public class scenemanager : MonoBehaviour
         {
             SceneManager.LoadScene("scene manager");
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            SceneManager.LoadScene("pinch and move");
+        }
         
     }
 }

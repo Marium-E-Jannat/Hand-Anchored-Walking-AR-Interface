@@ -1717,9 +1717,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Press 1 for fixed screen \nPress 2 for screen follow the head\nPress 3
-    for screen back and forth \nPress 4 for palm projection\nPress 5 for screen upward
-    from palm\nPress 6 for wrist\nPress 7 for pinch"
+  m_Text: "Press 0 for main menu\nPress 1 for fixed screen \nPress 2 for screen follow
+    the head\nPress 3 for screen back and forth \nPress 4 for palm projection\nPress
+    5 for screen upward from palm\nPress 6 for wrist\nPress 7 for pinch\nPress 8
+    for pinch and move"
 --- !u!222 &1663015208
 CanvasRenderer:
   m_ObjectHideFlags: 0

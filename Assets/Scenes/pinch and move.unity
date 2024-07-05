@@ -7116,6 +7116,7 @@ GameObject:
   - component: {fileID: 683795557}
   - component: {fileID: 683795560}
   - component: {fileID: 683795559}
+  - component: {fileID: 683795561}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -7341,6 +7342,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &683795561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683795551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c500bc0f9deae2408a0fad2249d3c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &691299983
 GameObject:
   m_ObjectHideFlags: 0

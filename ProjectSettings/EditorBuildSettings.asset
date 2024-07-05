@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/scene manager.unity
     guid: 05dbbb49ebaa20d4b9d8efa6557d1ebe
   - enabled: 1
-    path: Assets/Scenes/fixed screen 3.unity
+    path: Assets/Scenes/pinch and move.unity
     guid: b6d6d7119633818469f99cf7ea6003b3
   - enabled: 1
     path: Assets/Scenes/fixed screen 4.unity
