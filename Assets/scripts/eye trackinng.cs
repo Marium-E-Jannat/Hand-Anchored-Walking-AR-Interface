@@ -12,10 +12,12 @@ public class EyeTracking : MonoBehaviour
     [SerializeField] private OVRHand handUsedForPinchSelection;
     [SerializeField] private bool mockHandUsedForPinchSelection;
     [SerializeField] private bool allowPinchSelection; // Define allowPinchSelection here
-
+   
     private LineRenderer lineRenderer;
     private Button lastButton;
     private bool isPinching;
+    public static int PinchCounter;
+
 
     void Start()
     {
@@ -40,6 +42,7 @@ public class EyeTracking : MonoBehaviour
     {
         if (IsPinching())
         {
+            PinchCounter++;
             RaycastHit hit;
             bool hitSomething = Physics.Raycast(transform.position, transform.forward, out hit, 10.0f, layersToInclude);
 

@@ -130,7 +130,7 @@ public class Recorder : MonoBehaviour
 private void ShowQuestion()
 {
     startTime = Time.time;
-
+    EyeTracking.PinchCounter=0;
     if (Questions.Instance == null || Questions.Instance.questions == null || Questions.Instance.questions.Length == 0)
     {
         Debug.LogError("Questions.Instance or its questions are null or empty.");
@@ -191,7 +191,8 @@ private void ShowQuestion()
         {
             { "questionNumber", currentQuestionIndex + 1 }, // Assuming questions are 1-based index
             { "responseCorrect", isCorrect },
-            { "timeTaken", timeTaken }
+            { "timeTaken", timeTaken },
+            {"Pinches",EyeTracking.PinchCounter}
         };
         responses.Add(response);
         selec = -1;
