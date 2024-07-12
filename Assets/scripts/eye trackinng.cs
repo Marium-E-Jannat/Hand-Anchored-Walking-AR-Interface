@@ -6,7 +6,8 @@ using TMPro;
 public class EyeTracking : MonoBehaviour
 {
     [SerializeField] private Color rayColorDefaultState = Color.yellow;
-    [SerializeField] private Color rayColorPinchState = Color.green;
+    [SerializeField] public Color genericColor;
+    [SerializeField] private Color rayColorPinchState = Color.red;
     [SerializeField] private LayerMask layersToInclude;
     [SerializeField] private OVRHand handUsedForPinchSelection;
     [SerializeField] private bool mockHandUsedForPinchSelection;
@@ -20,6 +21,7 @@ public class EyeTracking : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         SetupRay();
+
     }
 
     void SetupRay()
@@ -46,7 +48,7 @@ public class EyeTracking : MonoBehaviour
                 HandlePinch(hit);
             }
         }
-        else
+       /* else
         {
             lineRenderer.startColor = rayColorDefaultState;
             lineRenderer.endColor = rayColorDefaultState;
@@ -57,13 +59,14 @@ public class EyeTracking : MonoBehaviour
                 SetButtonColors(lastButton, rayColorDefaultState);
                 lastButton = null;
             }
-        }
+        }*/
     }
 
     private void HandlePinch(RaycastHit hit)
     {
-        lineRenderer.startColor = rayColorPinchState;
+       /* lineRenderer.startColor = rayColorPinchState;
         lineRenderer.endColor = rayColorPinchState;
+        */
 
         Button button = hit.transform.GetComponent<Button>();
         if (button != null)
@@ -71,6 +74,8 @@ public class EyeTracking : MonoBehaviour
             // Change button color only once when pinching starts
             if (button != lastButton)
             {
+                 Image image = button.GetComponent<Image>();
+                genericColor=image.color;
                 SetButtonColors(button, rayColorPinchState);
                 lastButton = button;
             }
@@ -96,7 +101,16 @@ public class EyeTracking : MonoBehaviour
         {
             image.color = color;
         }
-
+        string buttonName = button.name;
+        if (buttonName.StartsWith("option"))
+        {
+            if (int.TryParse(buttonName.Substring(6), out int buttonNumber))
+            {
+                Recorder.selec = buttonNumber;
+                Debug.Log(Recorder.selec);
+               
+            }
+        }
         TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>();
         if (text != null)
         {

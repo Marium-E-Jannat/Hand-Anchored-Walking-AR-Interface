@@ -12,12 +12,14 @@ public class EyeInteractable : MonoBehaviour
     [field:SerializeField]public bool IsSelected { get; private set; }
     [SerializeField] private UnityEvent<GameObject> OnObjectHover;
     [SerializeField] private UnityEvent<GameObject> OnObjectSelected;
+    [SerializeField] private UnityEvent<int> OnButtonSelected = new();
     [SerializeField] private Material OnHoverActiveMaterial;
     [SerializeField] private Material OnSelectActiveMaterial;
     [SerializeField] private Material onIdleMaterial;
     private MeshRenderer meshRenderer;
     private Transform originalAnchor;
     private TextMeshPro statusText;
+    [SerializeField]private int option;
 
     private void Start()
     {
@@ -45,12 +47,11 @@ public class EyeInteractable : MonoBehaviour
         {
             meshRenderer.material = OnHoverActiveMaterial;
             OnObjectHover?.Invoke(gameObject);
-            
-        }
-
+        } 
         if (IsSelected)
         {
             OnObjectSelected?.Invoke(gameObject);
+            OnButtonSelected?.Invoke(option);
             meshRenderer.material = OnSelectActiveMaterial;
         }
         if(!IsHovered&&!IsSelected)

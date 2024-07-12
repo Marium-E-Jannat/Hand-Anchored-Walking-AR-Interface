@@ -8,14 +8,17 @@ public class FirebaseSceneManager : MonoBehaviour
 {
     public static FirebaseSceneManager Instance { get; private set; }
     public string sceneName;
+    public string UserID { get; private set; }
+    public int sceneno { get; private set; }
     private DatabaseReference databaseReference;
 
-    void Update()
+    void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Make the GameObject persistent across scenes
+            DontDestroyOnLoad(gameObject);
+            UserID = System.Guid.NewGuid().ToString(); // Generate a unique user ID
             InitializeFirebase();
         }
         else
@@ -26,18 +29,39 @@ public class FirebaseSceneManager : MonoBehaviour
 
     private void InitializeFirebase()
     {
-        Debug.Log("intialize firebase");
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
+        Debug.Log("Initialize Firebase");
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        {
             if (task.Result == DependencyStatus.Available)
             {
                 FirebaseApp app = FirebaseApp.DefaultInstance;
                 app.Options.DatabaseUrl = new System.Uri("https://trackingtech-e08ef-default-rtdb.firebaseio.com");
                 databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+                Debug.Log("connected success to firebase");
+                // Create user entry in the database
+                CreateUserInDatabase();
+
                 ListenForSceneChange();
             }
             else
             {
                 Debug.LogError("Could not resolve all Firebase dependencies: " + task.Result);
+            }
+        });
+    }
+
+    private void CreateUserInDatabase()
+    {
+        DatabaseReference userReference = databaseReference.Child("Users").Child(UserID);
+        userReference.SetValueAsync(true).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+            {
+                Debug.Log("User created with UserID: " + UserID);
+            }
+            else
+            {
+                Debug.LogError("Failed to create user: " + task.Exception);
             }
         });
     }
@@ -63,6 +87,7 @@ public class FirebaseSceneManager : MonoBehaviour
 
     private void ChangeScene(int sceneNo)
     {
+        sceneno = sceneNo;
         switch (sceneNo)
         {
             case 0:
@@ -113,5 +138,3 @@ public class FirebaseSceneManager : MonoBehaviour
         }
     }
 }
-
- 
