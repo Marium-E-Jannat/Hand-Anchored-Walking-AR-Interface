@@ -131,6 +131,7 @@ private void ShowQuestion()
 {
     startTime = Time.time;
     EyeTracking.PinchCounter=0;
+    EyeTracking.distance=0;
     if (Questions.Instance == null || Questions.Instance.questions == null || Questions.Instance.questions.Length == 0)
     {
         Debug.LogError("Questions.Instance or its questions are null or empty.");
@@ -192,7 +193,8 @@ private void ShowQuestion()
             { "questionNumber", currentQuestionIndex + 1 }, // Assuming questions are 1-based index
             { "responseCorrect", isCorrect },
             { "timeTaken", timeTaken },
-            {"Pinches",EyeTracking.PinchCounter}
+            {"Pinches",EyeTracking.PinchCounter},
+            {"Distance from centre of button",EyeTracking.distance}
         };
         responses.Add(response);
         selec = -1;

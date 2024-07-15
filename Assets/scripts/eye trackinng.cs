@@ -12,11 +12,14 @@ public class EyeTracking : MonoBehaviour
     [SerializeField] private OVRHand handUsedForPinchSelection;
     [SerializeField] private bool mockHandUsedForPinchSelection;
     [SerializeField] private bool allowPinchSelection; // Define allowPinchSelection here
-   
+    //
+    private bool _isPinching = false;
+    
     private LineRenderer lineRenderer;
     private Button lastButton;
     private bool isPinching;
     public static int PinchCounter;
+    public static float distance;
 
 
     void Start()
@@ -42,14 +45,19 @@ public class EyeTracking : MonoBehaviour
     {
         if (IsPinching())
         {
-            PinchCounter++;
             RaycastHit hit;
             bool hitSomething = Physics.Raycast(transform.position, transform.forward, out hit, 10.0f, layersToInclude);
-
+            if(!_isPinching){
+                PinchCounter++;
+                _isPinching=true;
+            }
             if (hitSomething)
             {
                 HandlePinch(hit);
             }
+        }
+        else{
+            _isPinching=false;
         }
        /* else
         {
@@ -70,11 +78,14 @@ public class EyeTracking : MonoBehaviour
        /* lineRenderer.startColor = rayColorPinchState;
         lineRenderer.endColor = rayColorPinchState;
         */
-
+        
         Button button = hit.transform.GetComponent<Button>();
         if (button != null)
         {
             // Change button color only once when pinching starts
+            distance=0;
+            Vector3 buttonCenter = button.GetComponent<RectTransform>().position;
+             distance = Vector3.Distance(hit.point, buttonCenter);
             if (button != lastButton)
             {
                  Image image = button.GetComponent<Image>();
