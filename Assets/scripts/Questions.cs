@@ -45,22 +45,28 @@ public class Questions : MonoBehaviour
     {
         questions = new string[]
         {
-            "What is the 20+40?",
-            "What is 2 + 2?",
-            "What is  7+5?",
-            "What is 6+9?",
-            "What is the largest planet in our solar system?"
+            "x=0, x+3=?",
+            "x=2, x+5=?",
+            "x=6, x+7=?",
+            "x=4, x+2=?",
+            "x=look, x+3=?",
+            "x=look, x+4=?",
+            "x=look, x+5=?",
+            "x=look, x+6=?"
         };
 
         options = new string[,]
         {
-            { "60", "50", "40", "20" },
-            { "3", "4", "5", "6" },
-            { "11", "10", "1", "12" },
-            { "15", "20", "5", "0" },
-            { "Earth", "Mars", "Jupiter", "Saturn" }
+            { "3", "2", "5", "6" },
+            { "2", "7", "5", "6" },
+            { "15", "1", "10", "13" },
+            { "6", "2", "5", "0" },
+            { "4", "2", "7", "0" },
+            { "9", "2", "6", "0" },
+            { "6", "2", "5", "8" },
+            { "7", "10", "2", "0" },
         };
 
-        correctAnswers = new int[] { 0, 1, 3, 0, 2 };
+        correctAnswers = new int[] {0,1,3,0,0,2,3,1};
     }
 }

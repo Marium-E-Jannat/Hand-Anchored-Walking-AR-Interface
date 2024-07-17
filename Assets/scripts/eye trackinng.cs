@@ -7,25 +7,27 @@ public class EyeTracking : MonoBehaviour
 {
     [SerializeField] private Color rayColorDefaultState = Color.yellow;
     [SerializeField] public Color genericColor;
-    [SerializeField] private Color rayColorPinchState = Color.red;
+    [SerializeField] private Color rayColorPinchState = Color.green;
     [SerializeField] private LayerMask layersToInclude;
     [SerializeField] private OVRHand handUsedForPinchSelection;
     [SerializeField] private bool mockHandUsedForPinchSelection;
     [SerializeField] private bool allowPinchSelection; // Define allowPinchSelection here
     //
     private bool _isPinching = false;
-    
+    public static bool clicked=false;
     private LineRenderer lineRenderer;
     private Button lastButton;
     private bool isPinching;
     public static int PinchCounter;
     public static float distance;
+    
 
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         SetupRay();
+
 
     }
 
@@ -50,11 +52,11 @@ public class EyeTracking : MonoBehaviour
             if(!_isPinching){
                 PinchCounter++;
                 _isPinching=true;
-            }
-            if (hitSomething)
-            {
-                HandlePinch(hit);
-            }
+                if (hitSomething)
+                {
+                    HandlePinch(hit);
+                }
+            } 
         }
         else{
             _isPinching=false;
@@ -86,11 +88,29 @@ public class EyeTracking : MonoBehaviour
             distance=0;
             Vector3 buttonCenter = button.GetComponent<RectTransform>().position;
              distance = Vector3.Distance(hit.point, buttonCenter);
+            
             if (button != lastButton)
             {
+                 if(lastButton!=null)
+                 {
+                    Image imaged=lastButton.GetComponent<Image>();
+                    imaged.color=Color.white;
+                     TextMeshProUGUI texts = lastButton.GetComponentInChildren<TextMeshProUGUI>();
+                        texts.color=Color.black;
+                         string buttonName=lastButton.name;
+                    if (int.TryParse(buttonName.Substring(6), out int buttonNumber))
+                    {
+                        Recorder.btnsave= buttonNumber;
+                        Debug.Log(Recorder.selec);
+               
+                     }
+                 }
                  Image image = button.GetComponent<Image>();
                 genericColor=image.color;
+                clicked=true;
                 SetButtonColors(button, rayColorPinchState);
+               
+                
                 lastButton = button;
             }
             isPinching = true;

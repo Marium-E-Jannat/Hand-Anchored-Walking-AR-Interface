@@ -33,11 +33,14 @@ EditorBuildSettings:
     path: Assets/Scenes/up from palm.unity
     guid: 1cbcfa6ca12cb8747a31b78361fb138c
   - enabled: 1
-    path: Assets/Scenes/wrist.unity
+    path: Assets/Scenes/OK.unity
     guid: ddd8a6cf7ec50134faab602e6d4acae1
   - enabled: 1
     path: Assets/Scenes/zero pinch.unity
     guid: bcfa96a1360fd3d44ba350da1f157077
+  - enabled: 1
+    path: Assets/Scenes/wrist.unity
+    guid: a4eb0c20d0acd9d4f8a20b60ec4b21da
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 70a3939c33cdddf48975072d47e634b6, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8244b43e166900844a5897876059b941, type: 2}
