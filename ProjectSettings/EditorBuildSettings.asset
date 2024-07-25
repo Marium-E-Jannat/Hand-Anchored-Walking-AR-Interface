@@ -54,7 +54,7 @@ EditorBuildSettings:
     path: Assets/Scenes/hand ray/fitts hands/fitt pinch and move.unity
     guid: b9486a1b6b8b77443b5206f8cafbae4a
   - enabled: 1
-    path: Assets/Scenes/hand ray/fitts hands/fitt pinch.unity
+    path: Assets/Scenes/hand ray/fitts hands/fitt pinch1.unity
     guid: 7fd6af4a577706342b45338597c6b45f
   - enabled: 1
     path: Assets/Scenes/fitt project on palm.unity
