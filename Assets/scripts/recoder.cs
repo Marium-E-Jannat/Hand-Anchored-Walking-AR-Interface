@@ -13,7 +13,7 @@ public class Recorder : MonoBehaviour
     public  Button[] optionButtons;
     public Color genericColor2;
     public static bool firsel = true;
-    public static int selec = -1;
+    public static int selec = 1;
     public static int btnsave = -1;
     private PanelManager panelManager;
 
