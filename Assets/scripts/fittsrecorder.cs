@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using TMPro;
 using UnityEngine.UI;
 using Firebase;
@@ -10,20 +9,29 @@ using Firebase.Extensions;
 
 public class fittsrecorder : MonoBehaviour
 {
-    public  Button[] optionButtons;
+    public Button[] optionButtons;
+    //public Button largeUglyButton;
+    public GameObject cursor;
+    public int pinchCount = 0;
+    private bool isPinching = false;
     public Color genericColor2;
     public static bool firsel = true;
     public static int selec;
     public static int btnsave = -1;
     private PanelManager panelManager;
-    public int cindex;
+    [SerializeField] private OVRHand rightHand;
+    [SerializeField] private Canvas canvas;
+    public float distanceUpperThreshold = 0.2f, distanceLowerThreshold = 0.05f;
+    public int cindex = -1;
     private int currentQuestionIndex = 0;
     private float startTime;
     private DatabaseReference dbReference;
     private FirebaseSceneManager firebaseManager;
     private List<Dictionary<string, object>> responses = new List<Dictionary<string, object>>();
     private int qindex;
-    [SerializeField] private Button startButton; 
+    private int outlier = 0;
+    private int error = 0;
+    [SerializeField] private Button startButton;
 
     void Start()
     {
@@ -36,100 +44,168 @@ public class fittsrecorder : MonoBehaviour
 
             StartCoroutine(InitializeQuiz());
         });
-        genericColor2=optionButtons[1].colors.normalColor;
+
+        genericColor2 = optionButtons[1].colors.normalColor;
     }
 
     private IEnumerator hello()
     {
-            Image image = startButton.GetComponent<Image>();
-            image.color=genericColor2;
-            for(int i=0;i<8;i++)
-            {
-                Image images = optionButtons[i].GetComponent<Image>();
-                images.color=genericColor2;
-                TextMeshProUGUI texts = optionButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-                texts.color=Color.black;
-            }
-            TextMeshProUGUI text = startButton.GetComponentInChildren<TextMeshProUGUI>();
-            text.color=Color.black;
-            selec=-1; 
-            yield return new WaitUntil(() => selec == 0);
+        Image image = startButton.GetComponent<Image>();
+        image.color = genericColor2;
 
+        for (int i = 0; i < optionButtons.Length; i++)
+        {
+            Image images = optionButtons[i].GetComponent<Image>();
+            images.color = genericColor2;
+            TextMeshProUGUI texts = optionButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+            texts.color = Color.black;
+        }
+
+        TextMeshProUGUI text = startButton.GetComponentInChildren<TextMeshProUGUI>();
+        text.color = Color.black;
+        selec = -1;
+        yield return new WaitUntil(() => selec == 0);
     }
+
+    void CheckForPinch()
+    {
+        if (rightHand != null)
+        {
+            bool pinchDetected = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+
+            if (pinchDetected)
+            {
+                if (selec == -1)
+                {
+                    if (!isPinching)
+                    {
+                        isPinching = true;
+                        pinchCount++;
+
+                        Vector3 pinchPosition = cursor.transform.position;
+
+                        Button button = optionButtons[cindex];
+                        Vector3 buttonPosition = button.transform.position;
+                        float distance = Vector2.Distance(
+                            new Vector2(pinchPosition.x, pinchPosition.y),
+                            new Vector2(buttonPosition.x, buttonPosition.y)
+                        );
+
+                        if (distance > distanceLowerThreshold && distance <= distanceUpperThreshold)
+                        {
+                            error++;
+                            selec = -2; 
+                        }
+                        else if(distance > distanceUpperThreshold)
+                        {
+                            outlier++;
+                            selec = -3; 
+                        }
+                    }
+                }
+            }
+            else
+            {
+                isPinching = false; // Reset the flag when no longer pinching
+            }
+        }
+    }
+
     private IEnumerator InitializeQuiz()
     {
-
         for (qindex = 0; qindex < 8; qindex++)
         {
             currentQuestionIndex = qindex;
+            cindex=-1;
             yield return StartCoroutine(hello());
-            Debug.Log("hello welcome you from start");
+
             Image image = startButton.GetComponent<Image>();
-            image.color=genericColor2;
+            image.color = genericColor2;
             TextMeshProUGUI text = startButton.GetComponentInChildren<TextMeshProUGUI>();
-            text.color=Color.black;
-            int first=qindex;
-            int second=qindex+4;
-            if(qindex>=4){
-                first=qindex;
-                second=qindex-4;
-            }
-            int send=first,t=0;
-            selec=-1;
-            for(int i=0;i<10;i++)
+            text.color = Color.black;
+
+            int first = qindex;
+            int second = (qindex + 4) % 8;
+            int send = first, t = 0;
+
+            for (int i = 0; i < 10; i++)
             {
-                Debug.Log("the random dot index "+qindex);
                 ShowQuestion(send);
-                yield return new WaitUntil(() => selec != -1);
-                Debug.Log("Option Selected"+selec);
-                Debug.Log("hello");
-                yield return StartCoroutine(HandleOptionSelected(selec-1));
-                t^=1;
-                if(t==1){send=second;}
-                else{send=first;}
+                selec = -1;
+
+                yield return new WaitUntil(() =>
+                {
+                    CheckForPinch();
+                    return selec != -1;
+                });
+
+                if (selec == -3)
+                {
+                    Debug.Log("Outlier detected, iteration not counted.");
+                    i--;
+                    selec = -1;
+                    continue;
+                }
+                else if (selec == -2)
+                {
+                    Debug.Log("Error detected, iteration counted.");
+                    selec = -1;
+                    continue;
+                }
+
+                Debug.Log("Option Selected: " + selec);
+                yield return StartCoroutine(HandleOptionSelected(selec - 1));
+
+                t ^= 1;
+                send = (t == 1) ? second : first;
             }
-            
         }
         SaveResponsesToFirebase();
         Debug.Log("Quiz complete!");
     }
-public  void ShowQuestion(int send)
-{
-     
-    Debug.Log("hello from showquestion"+send);
-    startTime = Time.time;
-    cindex=send;
-    EyeTracking.PinchCounter=0;
-    EyeTracking.distance=0;
-    for (int i = 0; i < 4; i++)
-    {
-        optionButtons[i].interactable = true;
-        Image images = optionButtons[i].GetComponent<Image>();
-        images.color=genericColor2;
-        TextMeshProUGUI texts = optionButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-        texts.color=Color.black;
 
+    public void ShowQuestion(int send)
+    {
+        Debug.Log("Showing question at index: " + send);
+        startTime = Time.time;
+
+        for (int i = 0; i < optionButtons.Length; i++)
+        {
+            optionButtons[i].interactable = true;
+            Image images = optionButtons[i].GetComponent<Image>();
+            images.color = genericColor2;
+            TextMeshProUGUI texts = optionButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+            texts.color = Color.black;
+        }
+
+        cindex = send;
+        Image image = optionButtons[cindex].GetComponent<Image>();
+        image.color = Color.red;
+
+        //optionButtons[8].transform.position = optionButtons[cindex].transform.position;
     }
-    Image image = optionButtons[cindex].GetComponent<Image>();
-    image.color=Color.red;
-}
 
     public IEnumerator HandleOptionSelected(int optionIndex)
     {
-        float timeTaken = Time.time - startTime; 
+        float timeTaken = Time.time - startTime;
         bool isCorrect = optionIndex == cindex;
+
         Dictionary<string, object> response = new Dictionary<string, object>
         {
-            { "random asker no ", currentQuestionIndex + 1 }, 
+            { "random asker no", currentQuestionIndex + 1 },
             { "responseCorrect", isCorrect },
             { "timeTaken", timeTaken },
-            {"Pinches",EyeTracking.PinchCounter},
-            {"Distance from centre of button",EyeTracking.distance}
+            { "Pinches", pinchCount },
+            //{ "Distance from centre of button", distance },
+            { "No of errors", error },
+            { "No of outliers", outlier }
         };
+
         responses.Add(response);
         selec = -1;
         yield return null;
     }
+
     private void SaveResponsesToFirebase()
     {
         string userId = firebaseManager.UserID;
@@ -141,180 +217,4 @@ public  void ShowQuestion(int send)
             dbReference.Child("Users").Child(userId).Child("fitts" + sceneno).Child(key).SetValueAsync(response);
         }
     }
-
-    private ColorBlock ResetColorBlock(Color gene)
-    {
-        Debug.Log("reset color block called ");
-        ColorBlock cb=optionButtons[0].colors;
-        cb.normalColor =gene;
-        cb.selectedColor =gene;
-        return cb;
-    }
 }
-/*using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using TMPro;
-using UnityEngine.UI;
-using Firebase;
-using Firebase.Database;
-using Firebase.Extensions;
-
-public class fittsrecorder : MonoBehaviour
-{
-    public  Button[] optionButtons;
-    public Color genericColor2;
-    public static bool firsel = true;
-    public static int selec;
-    public static int btnsave = -1;
-    private PanelManager panelManager;
-    public int cindex;
-    private int currentQuestionIndex = 0;
-    private float startTime;
-    private DatabaseReference dbReference;
-    private FirebaseSceneManager firebaseManager;
-    private List<Dictionary<string, object>> responses = new List<Dictionary<string, object>>();
-    private int qindex;
-    [SerializeField] private Button startButton; 
-
-    void Start()
-    {
-        firebaseManager = FirebaseSceneManager.Instance;
-        qindex = 0;
-
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
-        {
-            dbReference = FirebaseDatabase.DefaultInstance.RootReference;
-
-            StartCoroutine(InitializeQuiz());
-        });
-        genericColor2=optionButtons[1].colors.normalColor;
-    }
-
-    private IEnumerator hello()
-    {
-            Image image = startButton.GetComponent<Image>();
-            image.color=genericColor2;
-            for(int i=0;i<8;i++)
-            {
-                Image images = optionButtons[i].GetComponent<Image>();
-                images.color=genericColor2;
-                TextMeshProUGUI texts = optionButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-                texts.color=Color.black;
-            }
-            TextMeshProUGUI text = startButton.GetComponentInChildren<TextMeshProUGUI>();
-            text.color=Color.black;
-            selec=-1; 
-            yield return new WaitUntil(() => selec == 0);
-
-    }
-    private IEnumerator InitializeQuiz()
-    {
-
-        for (qindex = 0; qindex < 4; qindex++)
-        {
-            currentQuestionIndex = qindex;
-            yield return StartCoroutine(hello());
-            Debug.Log("hello welcome you from start");
-            Image image = startButton.GetComponent<Image>();
-            image.color=genericColor2;
-            TextMeshProUGUI text = startButton.GetComponentInChildren<TextMeshProUGUI>();
-            text.color=Color.black;
-            selec=-1;
-            Debug.Log("the random dot index "+qindex);
-            ShowQuestion();
-            yield return new WaitUntil(() => selec != -1);
-            Debug.Log("Option Selected"+selec);
-            Debug.Log("hello");
-            yield return StartCoroutine(HandleOptionSelected(selec-1));
-            
-        }
-        /*for(int i=0;i<8;i++)
-        {
-            Button button=optionButtons[i].GetComponent<Button>;
-            RectTransform rectTransform = button.GetComponent<RectTransform>();
-            rectTransform.sizeDelta=150f;
-        }
-        CircularButtonLayout.buttonRadius=100;
-        for (qindex = 4; qindex < 8; qindex++)
-        {
-             currentQuestionIndex = qindex;
-            yield return StartCoroutine(hello());
-            Image image = startButton.GetComponent<Image>();
-            image.color=genericColor2;
-            TextMeshProUGUI text = startButton.GetComponentInChildren<TextMeshProUGUI>();
-            text.color=Color.black;
-            selec=-1;
-            Debug.Log("the random dot index "+qindex);
-            ShowQuestion();
-            yield return new WaitUntil(() => selec != -1);
-            Debug.Log("Option Selected"+selec);
-            Debug.Log("hello");
-            yield return StartCoroutine(HandleOptionSelected(selec-1));
-            
-        }
-        
-        SaveResponsesToFirebase();
-        Debug.Log("Quiz complete!");
-    }
-public  void ShowQuestion()
-{
-     
-    Debug.Log("hello from showquestion"+qindex);
-    startTime = Time.time;
-    EyeTracking.PinchCounter=0;
-    EyeTracking.distance=0;
-    System.Random random=new System.Random();
-    cindex=random.Next(0,8);
-    for (int i = 0; i < 4; i++)
-    {
-        optionButtons[i].interactable = true;
-        Image images = optionButtons[i].GetComponent<Image>();
-        images.color=genericColor2;
-        TextMeshProUGUI texts = optionButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-        texts.color=Color.black;
-
-    }
-    Image image = optionButtons[cindex].GetComponent<Image>();
-    image.color=Color.red;
-}
-
-    public IEnumerator HandleOptionSelected(int optionIndex)
-    {
-        float timeTaken = Time.time - startTime; 
-        bool isCorrect = optionIndex == cindex;
-        Dictionary<string, object> response = new Dictionary<string, object>
-        {
-            { "random asker no ", currentQuestionIndex + 1 }, 
-            { "responseCorrect", isCorrect },
-            { "timeTaken", timeTaken },
-            {"Pinches",EyeTracking.PinchCounter},
-            {"Distance from centre of button",EyeTracking.distance}
-        };
-        responses.Add(response);
-        selec = -1;
-        yield return null;
-    }
-    private void SaveResponsesToFirebase()
-    {
-        string userId = firebaseManager.UserID;
-        int sceneno = firebaseManager.sceneno;
-
-        foreach (var response in responses)
-        {
-            string key = dbReference.Child("Users").Child(userId).Child("Scene" + sceneno).Push().Key;
-            dbReference.Child("Users").Child(userId).Child("fitts" + sceneno).Child(key).SetValueAsync(response);
-        }
-    }
-
-    private ColorBlock ResetColorBlock(Color gene)
-    {
-        Debug.Log("reset color block called ");
-        ColorBlock cb=optionButtons[0].colors;
-        cb.normalColor =gene;
-        cb.selectedColor =gene;
-        return cb;
-    }
-}
-*/
