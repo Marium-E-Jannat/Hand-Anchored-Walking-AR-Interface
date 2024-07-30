@@ -44,16 +44,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/fitt fixed screen.unity
     guid: 76bdb8b1dd7ace346bd18ef16210bc2c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/hand ray/fitts hands/fitt head_track_screen1.unity
     guid: 39a2b5ce1e5df424a995fc1cc6884ac4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/hand ray/fitts hands/fitt move with person1.unity
     guid: 3373ae3e8998a114495c239abcdc6dcc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/hand ray/fitts hands/fitt pinch and move.unity
     guid: b9486a1b6b8b77443b5206f8cafbae4a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/hand ray/fitts hands/fitt pinch1.unity
     guid: 7fd6af4a577706342b45338597c6b45f
   - enabled: 1
@@ -65,9 +65,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/fitt wrist.unity
     guid: f02d568ad7682c342bf4027108fbd6ee
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/hand ray/fitts hands/fitt zero pinch.unity
     guid: 4ae4c534e4f7e934b9814906491a2cb8
+  - enabled: 1
+    path: Assets/Scenes/fitt head_track_screen.unity
+    guid: 5387b8601bd36d146a234dbbf24740c7
+  - enabled: 1
+    path: Assets/Scenes/fitt move with person.unity
+    guid: a949d776d232a0f43be5e309c54f1bff
+  - enabled: 1
+    path: Assets/Scenes/fitt pinch and move.unity
+    guid: 3f56b9035309f034f93abca22bb17389
+  - enabled: 1
+    path: Assets/Scenes/fitt pinch.unity
+    guid: ec7e3b8857404c2418b3a213a6058aed
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 70a3939c33cdddf48975072d47e634b6, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8244b43e166900844a5897876059b941, type: 2}

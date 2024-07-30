@@ -130,6 +130,7 @@ public class fittsrecorder : MonoBehaviour
 
             for (int i = 0; i < 10; i++)
             {
+                Debug.Log("iteration is "+i);
                 ShowQuestion(send);
                 selec = -1;
 
@@ -150,6 +151,8 @@ public class fittsrecorder : MonoBehaviour
                 {
                     Debug.Log("Error detected, iteration counted.");
                     selec = -1;
+                     t ^= 1;
+                    send = (t == 1) ? second : first;
                     continue;
                 }
 

@@ -2055,6 +2055,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OVRCameraRigInteraction
       objectReference: {fileID: 0}
+    - target: {fileID: 7843117840881995355, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7843117841878813235, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4478,6 +4482,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4733c5f009d26ad49b3685117b8d3eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1416567257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1829333678728798496, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
+  m_PrefabInstance: {fileID: 1416567254}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1417309794
 GameObject:
   m_ObjectHideFlags: 0
@@ -4745,7 +4754,13 @@ MonoBehaviour:
   - {fileID: 424860690}
   - {fileID: 1518748166}
   - {fileID: 1737970238}
+  cursor: {fileID: 1416567257}
+  pinchCount: 0
   genericColor2: {r: 0, g: 0, b: 0, a: 0}
+  rightHand: {fileID: 1594560732}
+  canvas: {fileID: 1849468988}
+  distanceUpperThreshold: 0.2
+  distanceLowerThreshold: 0.05
   cindex: 0
   startButton: {fileID: 2070513526}
 --- !u!4 &1499063930
