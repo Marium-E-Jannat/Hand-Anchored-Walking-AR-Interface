@@ -5,6 +5,7 @@ using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
 using UnityEngine.Events;
+using System;
 
 public class fittsrecorder2 : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class fittsrecorder2 : MonoBehaviour
     private FirebaseSceneManager firebaseManager;
     public Color colorAtStill;
     public static int selec;
-    public static float startTime;
+    public static DateTime startTime;
     [SerializeField] private OVRHand rightHand;
     public static bool quizInProgress = false;
     int quizNumber = 0;
@@ -66,6 +67,8 @@ public class fittsrecorder2 : MonoBehaviour
                     }
                     ResetButtonColor();
                     iteration += 1;
+                    // reset timer for new iteration
+                    startTime = DateTime.Now;
                     if (iteration == 10)
                     {
                         quizInProgress = false;
@@ -137,7 +140,7 @@ public class fittsrecorder2 : MonoBehaviour
 
     private void HandleOptionSelected(status statusCode)
     {
-        float timeTaken = Time.time - startTime;
+        double timeTaken = DateTime.Now.Subtract(startTime).TotalMilliseconds;
         string statusString;
         if (statusCode == status.ERROR){
             statusString = "Error";

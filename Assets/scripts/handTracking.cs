@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using System.Collections;
+using System;
 
 public class ButtonInteractionHandler : MonoBehaviour
 {
@@ -63,7 +64,8 @@ public class ButtonInteractionHandler : MonoBehaviour
     private IEnumerator HandleStartButton(Button button){
         yield return new WaitUntil(()=>IsRightHandPinching() == false);
         fittsrecorder2.quizInProgress  = true;
-        fittsrecorder2.startTime = Time.time;
+        // start timer
+        fittsrecorder2.startTime = DateTime.Now;
         // Deactivate start button while quiz is in process
         button.GetComponent<Button>().interactable = false;
     }
