@@ -4923,7 +4923,6 @@ MonoBehaviour:
   - {fileID: 273745092}
   - {fileID: 1235282358}
   colorAtStill: {r: 0, g: 0, b: 0, a: 0}
-  startButton: {fileID: 142722329}
   rightHand: {fileID: 454252230}
   startNewQuiz:
     m_PersistentCalls:
@@ -10239,6 +10238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1567906948}
   - component: {fileID: 1567906947}
+  - component: {fileID: 1567906949}
   m_Layer: 0
   m_Name: circular
   m_TagString: Untagged
@@ -10268,7 +10268,6 @@ MonoBehaviour:
   - {fileID: 619103662}
   - {fileID: 273745092}
   - {fileID: 1235282358}
-  radius: 200
 --- !u!4 &1567906948
 Transform:
   m_ObjectHideFlags: 0
@@ -10284,6 +10283,48 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1567906949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567906946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58175477c01a7240b8cd09dd7774cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateRadius:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1567906947}
+        m_TargetAssemblyTypeName: CircularButtonLayout, Assembly-CSharp
+        m_MethodName: SetButtonRadius
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  updateDistance:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1567906947}
+        m_TargetAssemblyTypeName: CircularButtonLayout, Assembly-CSharp
+        m_MethodName: SetDistRadius
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 100
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1568526624
 GameObject:
   m_ObjectHideFlags: 0

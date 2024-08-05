@@ -1,16 +1,28 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CircularButtonLayout : MonoBehaviour
 {
     public Button startButton;  
     public Button[] buttons;   
-    public float radius = 100f; 
-    public static float buttonRadius = 50f;
+    private float radius = 100f; 
+    private float buttonRadius = 50f;
 
-    void Start()
+    public void SetDistRadius(float value) {
+        radius = value;
+        HandleLayoutChange();
+    }
+
+    public void SetButtonRadius(float value)
     {
-       
+        buttonRadius = value;
+        HandleLayoutChange();
+    }
+
+    void HandleLayoutChange()
+    {
+        
         startButton.transform.localPosition = new Vector3(0,0,-1);
 
         RectTransform startButtonRect = startButton.GetComponent<RectTransform>();
