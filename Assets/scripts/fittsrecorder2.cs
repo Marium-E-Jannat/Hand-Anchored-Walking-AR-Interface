@@ -61,6 +61,7 @@ public class fittsrecorder2 : MonoBehaviour
                 }else{
                     Debug.Log("Success, iteration counted.");
                 }
+                ResetButtonColor();
                 iteration += 1;
                 if (iteration == 10){
                     quizInProgress = false;
@@ -197,6 +198,15 @@ public class fittsrecorder2 : MonoBehaviour
         Debug.Log("Showing question at index: " + optionNumber);
         Image image = optionButtons[optionNumber].GetComponent<Image>();
         image.color = Color.red;
+    }
+
+    private void ResetButtonColor()
+    {
+        Image image = optionButtons[optionNumber].GetComponent<Image>();
+        if (image != null)
+        {
+            image.color = colorAtStill;
+        }
     }
 
     private void HandleOptionSelected(status statusCode)

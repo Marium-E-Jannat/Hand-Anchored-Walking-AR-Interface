@@ -10,11 +10,10 @@ public class ButtonInteractionHandler : MonoBehaviour
     public Color defaultColor = Color.white;
     public Color selectedColor = Color.green;
     public Color genericColor;
-    private Button lastButton;
+    //private Button lastButton;
     public static bool clicked = false;
     public static int PinchCounter;
     public static float distance;
-    private bool _isPinching = false;
 
     [SerializeField] private OVRHand rightHand;  // Reference to the right hand
     [SerializeField] private bool mockHandUsedForPinchSelection; // Mock pinch selection for testing
@@ -45,10 +44,10 @@ public class ButtonInteractionHandler : MonoBehaviour
         }
 
         // Subscribe to button click events
-        foreach (Button button in GetComponentsInChildren<Button>())
-        {
-            button.onClick.AddListener(() => HandleButtonInteraction(button));
-        }
+        //foreach (Button button in GetComponentsInChildren<Button>())
+        //{
+        //    button.onClick.AddListener(() => HandleButtonInteraction(button));
+        //}
     }
 
     public void OnButtonClick(GameObject buttonObject)
@@ -80,20 +79,24 @@ public class ButtonInteractionHandler : MonoBehaviour
     private void HandleButtonInteraction(Button button)
     {
         // Ensure only one button is selected at a time
-        if (lastButton != null && lastButton != button)
-        {
-            ResetButtonColor(lastButton);
-        }
+        //if (lastButton != null && lastButton != button)
+        //{
+        //    ResetButtonColor(lastButton);
+        //}
+
+        // FIXME: Move this fittrecorder2 if possible
+        //ResetButtonColor(button);
 
         // Handle button click
         distance = 0;
         Vector3 buttonCenter = button.GetComponent<RectTransform>().position;
         distance = Vector3.Distance(Camera.main.transform.position, buttonCenter);
 
-        // Update button colors
-        Image image = button.GetComponent<Image>();
-        genericColor = image.color;
-        SetButtonColor(button, selectedColor);
+        // QUESTION: Should the button be colored green for correctness
+        // Update button color to something that means CORRECT
+        // Image image = button.GetComponent<Image>();
+        // genericColor = image.color;
+        // SetButtonColor(button, selectedColor);
 
         string buttonName = button.name;
         if (buttonName.StartsWith("option") && int.TryParse(buttonName.Substring(6), out int buttonNumber))
@@ -107,7 +110,7 @@ public class ButtonInteractionHandler : MonoBehaviour
             Debug.Log($"Button selected: {Recorder.selec}");
         }
 
-        lastButton = button;
+        //lastButton = button;
         clicked = true;
         PinchCounter++;
     }
@@ -149,16 +152,12 @@ public class ButtonInteractionHandler : MonoBehaviour
 
     private void Update()
     {
-        if (lastButton != null){
-            ResetButtonColor(lastButton);
-        }
+        //if (lastButton != null){
+        //    ResetButtonColor(lastButton);
+        //}
         if (IsRightHandPinching())
         {
             HandlePinch();
-        }
-        else
-        {
-            _isPinching = false;
         }
     }
 
@@ -184,7 +183,6 @@ public class ButtonInteractionHandler : MonoBehaviour
             if (button != null)
             {
                 OnButtonClick(button.gameObject);
-                _isPinching = true;
                 PinchCounter++;
                 break; // Exit loop after first button click
             }
