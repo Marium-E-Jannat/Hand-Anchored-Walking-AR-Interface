@@ -834,7 +834,13 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -854,11 +860,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 4423e019-8e10-46fd-962c-4ac257496014
+  cloudProjectId: 12aabdba-32a5-491f-91e9-06fff8efc8a5
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Eye Gaze
-  organizationId: anmol_gogy
+  projectName: EyeGaze
+  organizationId: jill01009
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

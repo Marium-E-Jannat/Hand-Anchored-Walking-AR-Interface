@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class ButtonInteractionHandler : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class ButtonInteractionHandler : MonoBehaviour
     [SerializeField] private bool allowPinchSelection = true; // Allow pinch selection
     [SerializeField] private Canvas canvas; // Reference to the Canvas
 
+    [SerializeField] private Button startButton;
     private GraphicRaycaster raycaster;
     private PointerEventData pointerEventData;
     private EventSystem eventSystem;
@@ -59,6 +61,22 @@ public class ButtonInteractionHandler : MonoBehaviour
         }
     }
 
+    private IEnumerator HandleStartButton(Button button){
+        yield return new WaitUntil(()=>IsRightHandPinching() == false);
+        fittsrecorder2.quizInProgress  = true;
+        fittsrecorder2.startTime = Time.time;
+        // Deactivate start button while quiz is in process
+        button.GetComponent<Button>().interactable = false;
+    }
+
+    public void ActivateStart(){
+        if(startButton != null){
+            startButton.interactable = true;
+        }else{
+            Debug.Log("Start button in hand tracking handler is not assigned.");
+        }
+    }
+
     private void HandleButtonInteraction(Button button)
     {
         // Ensure only one button is selected at a time
@@ -82,11 +100,12 @@ public class ButtonInteractionHandler : MonoBehaviour
         {
             Recorder.selec = buttonNumber;
             fittsrecorder.selec=buttonNumber;
-            fittsrecorder.btnsave=buttonNumber;
             Recorder.btnsave = buttonNumber;
+            if (buttonNumber == 0){
+                StartCoroutine(HandleStartButton(button));
+            }
             Debug.Log($"Button selected: {Recorder.selec}");
         }
-
 
         lastButton = button;
         clicked = true;
@@ -130,6 +149,9 @@ public class ButtonInteractionHandler : MonoBehaviour
 
     private void Update()
     {
+        if (lastButton != null){
+            ResetButtonColor(lastButton);
+        }
         if (IsRightHandPinching())
         {
             HandlePinch();
