@@ -52,11 +52,11 @@ public class fittsrecorder2 : MonoBehaviour
             }
             ShowQuestion();
             if(wasPinching && !rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index)) {
-                status newStatusCode = CheckForPinch();
+                status statusCode = CheckForPinch();
 
-                if (newStatusCode != status.OUTLIER)
+                if (statusCode != status.OUTLIER)
                 {
-                    if (newStatusCode == status.ERROR)
+                    if (statusCode == status.ERROR)
                     {
                         Debug.Log("Error detected, iteration counted.");
                     }
@@ -89,8 +89,7 @@ public class fittsrecorder2 : MonoBehaviour
                 }
 
                 Debug.Log("Option Selected: " + selec);
-                HandleOptionSelected(newStatusCode);
-         
+                HandleOptionSelected(statusCode);
             }
         }
         wasPinching = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
@@ -99,34 +98,25 @@ public class fittsrecorder2 : MonoBehaviour
 
     status CheckForPinch()
     {
-        //if (rightHand != null && rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index))
-        //{
+        Vector3 pinchPosition = cursor.transform.position;
+        Button button = optionButtons[optionNumber];
+        Debug.Log("current option number is " + optionNumber);
+        Vector3 buttonPosition = button.transform.position;
+        float distance = Vector2.Distance(
+            new Vector2(pinchPosition.x, pinchPosition.y),
+            new Vector2(buttonPosition.x, buttonPosition.y)
+        );
 
-            Vector3 pinchPosition = cursor.transform.position;
-
-            // Button button = optionButtons[cindex];
-            Button button = optionButtons[optionNumber];
-            Debug.Log("current option number is " + optionNumber);
-            Vector3 buttonPosition = button.transform.position;
-            float distance = Vector2.Distance(
-                new Vector2(pinchPosition.x, pinchPosition.y),
-                new Vector2(buttonPosition.x, buttonPosition.y)
-            );
-
-            if (distance > distanceLowerThreshold && distance <= distanceUpperThreshold)
-            {
-                return status.ERROR;
-            }
-            else if(distance > distanceUpperThreshold)
-            {
-                return status.OUTLIER;
-            }else{
-                return status.SUCCESS;
-            }
-        //}
-        //else{
-        //    return status.UNPINCH;
-        //}
+        if (distance > distanceLowerThreshold && distance <= distanceUpperThreshold)
+        {
+            return status.ERROR;
+        }
+        else if(distance > distanceUpperThreshold)
+        {
+            return status.OUTLIER;
+        }else{
+            return status.SUCCESS;
+        }
     }
 
     public void ShowQuestion()
