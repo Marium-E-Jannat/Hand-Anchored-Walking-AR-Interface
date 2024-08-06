@@ -2,49 +2,23 @@ using UnityEngine;
 using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 public class FirebaseLayoutManager : MonoBehaviour
 {
     public static FirebaseLayoutManager Instance { get; private set; }
     private DatabaseReference databaseReference;
+    private FirebaseSceneManager firebaseManager;
     public UnityEvent<float> updateRadius = new UnityEvent<float>();
     public UnityEvent<float> updateDistance = new UnityEvent<float>();
+    void Start(){
+        firebaseManager = FirebaseSceneManager.Instance;
 
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            InitializeFirebase();
-        }
-        else
-        {
-            Destroy(gameObject); // Destroy duplicate instances
-        }
-    }
-
-    private void InitializeFirebase()
-    {
-        Debug.Log("Initialize Firebase");
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
-            if (task.Result == DependencyStatus.Available)
-            {
-                FirebaseApp app = FirebaseApp.DefaultInstance;
-                app.Options.DatabaseUrl = new System.Uri("https://trackingtech-e08ef-default-rtdb.firebaseio.com");
-                databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-                Debug.Log("connected success to firebase");
-
-                ListenForButtonRadiusChange();
-                ListenForDistRadiusChange();
-            }
-            else
-            {
-                Debug.LogError("Could not resolve all Firebase dependencies: " + task.Result);
-            }
+            databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+            ListenForButtonRadiusChange();
+            ListenForDistRadiusChange();
         });
     }
 

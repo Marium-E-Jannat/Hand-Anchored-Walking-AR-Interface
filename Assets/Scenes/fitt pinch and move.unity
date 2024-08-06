@@ -10470,6 +10470,7 @@ MonoBehaviour:
   mockHandUsedForPinchSelection: 0
   allowPinchSelection: 1
   canvas: {fileID: 683795554}
+  startButton: {fileID: 524216903}
 --- !u!114 &864300795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18475,6 +18476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1521361574}
   - component: {fileID: 1521361573}
+  - component: {fileID: 1521361575}
   m_Layer: 0
   m_Name: circular
   m_TagString: Untagged
@@ -18504,7 +18506,6 @@ MonoBehaviour:
   - {fileID: 1298702261}
   - {fileID: 1600157076}
   - {fileID: 890779047}
-  radius: 200
 --- !u!4 &1521361574
 Transform:
   m_ObjectHideFlags: 0
@@ -18520,6 +18521,48 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1521361575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521361572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58175477c01a7240b8cd09dd7774cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateRadius:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1521361573}
+        m_TargetAssemblyTypeName: CircularButtonLayout, Assembly-CSharp
+        m_MethodName: SetButtonRadius
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  updateDistance:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1521361573}
+        m_TargetAssemblyTypeName: CircularButtonLayout, Assembly-CSharp
+        m_MethodName: SetDistRadius
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1531421101
 GameObject:
   m_ObjectHideFlags: 0
@@ -22304,6 +22347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1760219871}
   - component: {fileID: 1760219870}
+  - component: {fileID: 1760219872}
   m_Layer: 0
   m_Name: recorder
   m_TagString: Untagged
@@ -22318,7 +22362,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1760219869}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef06c16b0d8551f4ca82421dc4b88b76, type: 3}
   m_Name: 
@@ -22356,6 +22400,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1760219872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760219869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16aec3e13d0a03e4ebf0e5d002dd06ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  optionButtons:
+  - {fileID: 1739700205}
+  - {fileID: 1428971311}
+  - {fileID: 195990614}
+  - {fileID: 1564336475}
+  - {fileID: 1179360407}
+  - {fileID: 1298702261}
+  - {fileID: 1600157076}
+  - {fileID: 890779047}
+  colorAtStill: {r: 0, g: 0, b: 0, a: 0}
+  rightHand: {fileID: 454252230}
+  startNewQuiz:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 864300794}
+        m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
+        m_MethodName: ActivateStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  cursor: {fileID: 366431957}
+  distanceUpperThreshold: 0.2
+  distanceLowerThreshold: 0.05
 --- !u!1 &1763511558
 GameObject:
   m_ObjectHideFlags: 0
