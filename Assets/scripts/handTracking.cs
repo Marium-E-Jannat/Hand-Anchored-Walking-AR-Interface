@@ -32,6 +32,8 @@ public class ButtonInteractionHandler : MonoBehaviour
         raycaster = canvas.GetComponent<GraphicRaycaster>();
         eventSystem = GetComponent<EventSystem>();
 
+        ActivateStart();
+
         if (raycaster == null)
         {
             Debug.LogError("GraphicRaycaster component is missing from the Canvas.");
@@ -68,11 +70,13 @@ public class ButtonInteractionHandler : MonoBehaviour
         fittsrecorder2.startTime = DateTime.Now;
         // Deactivate start button while quiz is in process
         button.GetComponent<Button>().interactable = false;
+        button.GetComponent<Image>().color = defaultColor;
     }
 
     public void ActivateStart(){
         if(startButton != null){
             startButton.interactable = true;
+            startButton.GetComponent<Image>().color = Color.red;
         }else{
             Debug.Log("Start button in hand tracking handler is not assigned.");
         }

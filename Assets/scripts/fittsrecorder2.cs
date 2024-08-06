@@ -54,6 +54,10 @@ public class fittsrecorder2 : MonoBehaviour
             ShowQuestion();
             if(wasPinching && !rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index)) {
                 status statusCode = CheckForPinch();
+                // Debug.Log("Option Selected: " + selec);
+                // Debug.Log("Iteration "+iteration);
+                // Debug.Log("Quiz " + quizNumber);
+                HandleOptionSelected(statusCode);
 
                 if (statusCode != status.OUTLIER)
                 {
@@ -90,9 +94,6 @@ public class fittsrecorder2 : MonoBehaviour
                 {
                     Debug.Log("Outlier detected, iteration not counted.");
                 }
-
-                Debug.Log("Option Selected: " + selec);
-                HandleOptionSelected(statusCode);
             }
         }
         wasPinching = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
