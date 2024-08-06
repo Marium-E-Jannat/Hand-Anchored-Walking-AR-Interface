@@ -3,23 +3,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Collections;
+using System;
 
 public class ButtonInteractionHandler : MonoBehaviour
 {
     public Color defaultColor = Color.white;
     public Color selectedColor = Color.green;
     public Color genericColor;
-    private Button lastButton;
+    //private Button lastButton;
     public static bool clicked = false;
     public static int PinchCounter;
     public static float distance;
-    private bool _isPinching = false;
 
     [SerializeField] private OVRHand rightHand;  // Reference to the right hand
     [SerializeField] private bool mockHandUsedForPinchSelection; // Mock pinch selection for testing
     [SerializeField] private bool allowPinchSelection = true; // Allow pinch selection
     [SerializeField] private Canvas canvas; // Reference to the Canvas
 
+    [SerializeField] private Button startButton;
     private GraphicRaycaster raycaster;
     private PointerEventData pointerEventData;
     private EventSystem eventSystem;
@@ -43,10 +45,10 @@ public class ButtonInteractionHandler : MonoBehaviour
         }
 
         // Subscribe to button click events
-        foreach (Button button in GetComponentsInChildren<Button>())
-        {
-            button.onClick.AddListener(() => HandleButtonInteraction(button));
-        }
+        //foreach (Button button in GetComponentsInChildren<Button>())
+        //{
+        //    button.onClick.AddListener(() => HandleButtonInteraction(button));
+        //}
     }
 
     public void OnButtonClick(GameObject buttonObject)
@@ -59,36 +61,58 @@ public class ButtonInteractionHandler : MonoBehaviour
         }
     }
 
+    private IEnumerator HandleStartButton(Button button){
+        yield return new WaitUntil(()=>IsRightHandPinching() == false);
+        fittsrecorder2.quizInProgress  = true;
+        // start timer
+        fittsrecorder2.startTime = DateTime.Now;
+        // Deactivate start button while quiz is in process
+        button.GetComponent<Button>().interactable = false;
+    }
+
+    public void ActivateStart(){
+        if(startButton != null){
+            startButton.interactable = true;
+        }else{
+            Debug.Log("Start button in hand tracking handler is not assigned.");
+        }
+    }
+
     private void HandleButtonInteraction(Button button)
     {
         // Ensure only one button is selected at a time
-        if (lastButton != null && lastButton != button)
-        {
-            ResetButtonColor(lastButton);
-        }
+        //if (lastButton != null && lastButton != button)
+        //{
+        //    ResetButtonColor(lastButton);
+        //}
+
+        // FIXME: Move this fittrecorder2 if possible
+        //ResetButtonColor(button);
 
         // Handle button click
         distance = 0;
         Vector3 buttonCenter = button.GetComponent<RectTransform>().position;
         distance = Vector3.Distance(Camera.main.transform.position, buttonCenter);
 
-        // Update button colors
-        Image image = button.GetComponent<Image>();
-        genericColor = image.color;
-        SetButtonColor(button, selectedColor);
+        // QUESTION: Should the button be colored green for correctness
+        // Update button color to something that means CORRECT
+        // Image image = button.GetComponent<Image>();
+        // genericColor = image.color;
+        // SetButtonColor(button, selectedColor);
 
         string buttonName = button.name;
         if (buttonName.StartsWith("option") && int.TryParse(buttonName.Substring(6), out int buttonNumber))
         {
             Recorder.selec = buttonNumber;
             fittsrecorder.selec=buttonNumber;
-            fittsrecorder.btnsave=buttonNumber;
             Recorder.btnsave = buttonNumber;
+            if (buttonNumber == 0){
+                StartCoroutine(HandleStartButton(button));
+            }
             Debug.Log($"Button selected: {Recorder.selec}");
         }
 
-
-        lastButton = button;
+        //lastButton = button;
         clicked = true;
         PinchCounter++;
     }
@@ -130,13 +154,12 @@ public class ButtonInteractionHandler : MonoBehaviour
 
     private void Update()
     {
+        //if (lastButton != null){
+        //    ResetButtonColor(lastButton);
+        //}
         if (IsRightHandPinching())
         {
             HandlePinch();
-        }
-        else
-        {
-            _isPinching = false;
         }
     }
 
@@ -162,7 +185,6 @@ public class ButtonInteractionHandler : MonoBehaviour
             if (button != null)
             {
                 OnButtonClick(button.gameObject);
-                _isPinching = true;
                 PinchCounter++;
                 break; // Exit loop after first button click
             }
