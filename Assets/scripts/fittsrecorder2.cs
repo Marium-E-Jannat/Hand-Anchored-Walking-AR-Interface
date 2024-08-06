@@ -160,7 +160,9 @@ public class fittsrecorder2 : MonoBehaviour
             { "Quiz number", quizNumber},
             { "Iteration", iteration},
             { "Time taken", timeTaken },
-            { "Status", statusString}
+            { "Status", statusString},
+            { "Button radius", CircularButtonLayout.ButtonRadius},
+            { "Distance radius", CircularButtonLayout.Radius},
         };
 
         responses.Add(response);
