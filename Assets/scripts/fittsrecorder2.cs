@@ -16,7 +16,7 @@ public class fittsrecorder2 : MonoBehaviour
     public static int selec;
     public static DateTime startTime;
     [SerializeField] private OVRHand rightHand;
-    public static bool quizInProgress = false;
+    public static bool quizInProgress;
     int quizNumber = 0;
     int optionNumber;
     int iteration = 0;
@@ -42,6 +42,7 @@ public class fittsrecorder2 : MonoBehaviour
             dbReference = FirebaseDatabase.DefaultInstance.RootReference;
         });
         colorAtStill = optionButtons[1].colors.normalColor;
+        quizInProgress = false;
     }
 
     private void Update(){
