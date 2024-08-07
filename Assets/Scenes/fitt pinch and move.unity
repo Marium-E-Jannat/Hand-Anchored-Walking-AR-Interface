@@ -4986,17 +4986,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2112884335}
     m_Modifications:
+    - target: {fileID: 1829333678139731424, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.018
+      objectReference: {fileID: 0}
+    - target: {fileID: 1829333678139731424, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.018
+      objectReference: {fileID: 0}
     - target: {fileID: 1829333678728798497, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.40454474
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1829333678728798497, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.40454474
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1829333678728798497, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.40454474
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1829333678728798497, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5006,6 +5014,18 @@ PrefabInstance:
       propertyPath: _hand
       value: 
       objectReference: {fileID: 849844528}
+    - target: {fileID: 4376609113298864075, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
+      propertyPath: _selectObject
+      value: 
+      objectReference: {fileID: 366431958}
+    - target: {fileID: 6707999523870478443, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707999523870478443, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8030197382645210609, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
       propertyPath: m_Name
       value: HandRayInteractor
@@ -5058,6 +5078,11 @@ PrefabInstance:
 --- !u!1 &366431957 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1829333678728798496, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
+  m_PrefabInstance: {fileID: 366431956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &366431958 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5558809790615712042, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
   m_PrefabInstance: {fileID: 366431956}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &373840840
