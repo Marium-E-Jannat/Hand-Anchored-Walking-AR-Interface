@@ -63,8 +63,16 @@ public class PinchMoveCanvas : MonoBehaviour
     [SerializeField] private float rotationSpeed = 50.0f; // Speed of the canvas rotation
     [SerializeField] private bool mockPinch = false; // Mock pinch for testing without hardware
 
-    private bool isPinching;
+    // private bool isPinching;
     private Vector3 lastHandPosition;
+    bool wasPinching = false;
+    Vector3 canvasHalfSize;
+
+    void Start(){
+        RectTransform rectTransform = transform.GetComponent<RectTransform>();
+        Vector2 size = rectTransform.sizeDelta * rectTransform.localScale;
+        canvasHalfSize = new Vector3(size.x / 2.0f, size.y / 2.0f, 0);
+    }
 
     void Update()
     {
@@ -72,21 +80,16 @@ public class PinchMoveCanvas : MonoBehaviour
         if (IsPinching())
         {
             Vector3 currentHandPosition = handUsedForPinch.transform.position;
-
-            if (isPinching)
-            {
+            if(!wasPinching){
+                canvasTransform.position = currentHandPosition + canvasHalfSize + new Vector3(0, 0, 0.05f);
+            }else{
                 Vector3 handDelta = currentHandPosition - lastHandPosition;
                 MoveCanvasFromBottomLeft(handDelta);
                 RotateCanvas(handDelta);
             }
-
             lastHandPosition = currentHandPosition;
-            isPinching = true;
         }
-        else
-        {
-            isPinching = false;
-        }
+        wasPinching = IsPinching();
     }
 
     private bool IsPinching()
