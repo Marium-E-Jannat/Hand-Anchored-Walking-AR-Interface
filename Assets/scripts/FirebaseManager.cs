@@ -147,16 +147,28 @@ public class FirebaseSceneManager : MonoBehaviour
                 Debug.Log("scene 13");
                 break;
             case 14:
-                sceneName = "fitt wrist";
+                sceneName = "fitt up from palm distance";
                 Debug.Log("scene 14");
                 break;
             case 15:
-                sceneName = "fitt pinch";
+                sceneName = "fitt wrist";
                 Debug.Log("scene 15");
                 break;
             case 16:
-                sceneName = "fitt pinch and move";
+                sceneName = "fitt wrist distance";
                 Debug.Log("scene 16");
+                break;
+            // case 17:
+            //     sceneName = "fitt pinch";
+            //     Debug.Log("scene 16");
+            //     break;
+            case 17:
+                sceneName = "fitt pinch and move";
+                Debug.Log("scene 17");
+                break;
+            case 18:
+                sceneName = "fitt pinch and move distance";
+                Debug.Log("scene 18");
                 break;
             
             // Add more cases as needed

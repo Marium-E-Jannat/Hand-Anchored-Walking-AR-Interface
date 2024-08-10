@@ -62,7 +62,8 @@ public class PinchMoveCanvas : MonoBehaviour
     [SerializeField] private float moveSpeed = 1.0f; // Speed of the canvas movement
     [SerializeField] private float rotationSpeed = 50.0f; // Speed of the canvas rotation
     [SerializeField] private bool mockPinch = false; // Mock pinch for testing without hardware
-
+    [SerializeField] private GameObject indexFingerTip;
+    [SerializeField] private GameObject indexFingerKnuckle;
     // private bool isPinching;
     private Vector3 lastHandPosition;
     bool wasPinching = false;
@@ -79,15 +80,19 @@ public class PinchMoveCanvas : MonoBehaviour
         // Check if pinching
         if (IsPinching())
         {
-            Vector3 currentHandPosition = handUsedForPinch.transform.position;
+            Vector3 indxFingerDirection = indexFingerTip.transform.position - indexFingerKnuckle.transform.position;
             if(!wasPinching){
-                canvasTransform.position = currentHandPosition + canvasHalfSize + new Vector3(0, 0, 0.05f);
-            }else{
-                Vector3 handDelta = currentHandPosition - lastHandPosition;
-                MoveCanvasFromBottomLeft(handDelta);
-                RotateCanvas(handDelta);
+                canvasTransform.position = indexFingerTip.transform.position + canvasHalfSize + indxFingerDirection.normalized;
+                transform.LookAt(indxFingerDirection);
+                transform.Rotate(new Vector3(0,1,0), 180);
+                // RotateCanvas(handDelta);
             }
-            lastHandPosition = currentHandPosition;
+            // else{
+            //     Vector3 handDelta = currentHandPosition - lastHandPosition;
+            //     MoveCanvasFromBottomLeft(handDelta);
+            //     RotateCanvas(handDelta);
+            // }
+            // lastHandPosition = currentIdxFingerPosition;
         }
         wasPinching = IsPinching();
     }
@@ -108,11 +113,12 @@ public class PinchMoveCanvas : MonoBehaviour
 
     private void RotateCanvas(Vector3 handDelta)
     {
-        // Use the horizontal movement of the hand to determine rotation angle
+        // // Use the horizontal movement of the hand to determine rotation angle
         float rotationAngle = handDelta.x * rotationSpeed * Time.deltaTime;
 
-        // Rotate the canvas around the Z axis (to make it more visible, change as needed)
+        // // Rotate the canvas around the Z axis (to make it more visible, change as needed)
         canvasTransform.Rotate(Vector3.forward, rotationAngle);
+        // canvasTransform.rotation = handUsedForPinch.transform.rotation;
     }
 }
 
