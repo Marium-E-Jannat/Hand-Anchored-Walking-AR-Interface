@@ -55,7 +55,7 @@ using UnityEngine;
 }*/
 
 
-public class PinchMoveCanvas : MonoBehaviour
+public class PinchMoveCanvasClose : MonoBehaviour
 {
     [SerializeField] private OVRHand handUsedForPinch; // The hand used for pinch detection
     [SerializeField] private Transform canvasTransform; // The transform of the canvas
@@ -80,14 +80,15 @@ public class PinchMoveCanvas : MonoBehaviour
         // Check if pinching
         if (IsPinching())
         {
-            Vector3 indxFingerDirection = indexFingerTip.transform.position - indexFingerKnuckle.transform.position;
+            // Vector3 indxFingerDirection = indexFingerTip.transform.position - indexFingerKnuckle.transform.position;
             if(!wasPinching){
-                transform.position = indexFingerTip.transform.position + canvasHalfSize + indxFingerDirection.normalized;
-                transform.LookAt(indxFingerDirection);
-                transform.Rotate(new Vector3(0,1,0), 180);
-                if(closeDistance){
-                    transform.position = indexFingerTip.transform.position + canvasHalfSize;
-                }
+                // transform.position = indexFingerTip.transform.position + canvasHalfSize + indxFingerDirection.normalized;
+                // transform.LookAt(indxFingerDirection);
+                // transform.Rotate(new Vector3(0,1,0), 180);
+                // if(closeDistance){
+                //     transform.position = indexFingerTip.transform.position + canvasHalfSize;
+                // }
+                transform.position = handUsedForPinch.transform.position + canvasHalfSize;
                 // RotateCanvas(handDelta);
             }
             // else{
