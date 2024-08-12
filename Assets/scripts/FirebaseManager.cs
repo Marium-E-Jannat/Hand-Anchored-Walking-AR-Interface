@@ -166,6 +166,14 @@ public class FirebaseSceneManager : MonoBehaviour
                 sceneName = "fitt pinch and move distance";
                 Debug.Log("scene 18");
                 break;
+            case 19:
+                sceneName = "fitt pinch and move (deprecated)";
+                Debug.Log("scene 19");
+                break;
+            case 20:
+                sceneName = "fitt pinch (deprecated)";
+                Debug.Log("scene 20");
+                break;
             
             // Add more cases as needed
         }

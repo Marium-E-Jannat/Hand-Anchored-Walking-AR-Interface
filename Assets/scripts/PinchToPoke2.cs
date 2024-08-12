@@ -55,50 +55,38 @@ using UnityEngine;
 }*/
 
 
-public class PinchMoveCanvasClose : MonoBehaviour
+public class PinchMoveCanvas2 : MonoBehaviour
 {
     [SerializeField] private OVRHand handUsedForPinch; // The hand used for pinch detection
     [SerializeField] private Transform canvasTransform; // The transform of the canvas
     [SerializeField] private float moveSpeed = 1.0f; // Speed of the canvas movement
     [SerializeField] private float rotationSpeed = 50.0f; // Speed of the canvas rotation
     [SerializeField] private bool mockPinch = false; // Mock pinch for testing without hardware
-    [SerializeField] private GameObject indexFingerTip;
-    [SerializeField] private GameObject indexFingerKnuckle;
-    // private bool isPinching;
-    [SerializeField] private bool closeDistance;
-    bool wasPinching = false;
-    Vector3 canvasHalfSize;
 
-    void Start(){
-        RectTransform rectTransform = transform.GetComponent<RectTransform>();
-        Vector2 size = rectTransform.sizeDelta * rectTransform.localScale;
-        canvasHalfSize = new Vector3(size.x / 2.0f, size.y / 2.0f, 0);
-    }
+    private bool isPinching;
+    private Vector3 lastHandPosition;
 
     void Update()
     {
         // Check if pinching
         if (IsPinching())
         {
-            // Vector3 indxFingerDirection = indexFingerTip.transform.position - indexFingerKnuckle.transform.position;
-            if(!wasPinching){
-                // transform.position = indexFingerTip.transform.position + canvasHalfSize + indxFingerDirection.normalized;
-                // transform.LookAt(indxFingerDirection);
-                // transform.Rotate(new Vector3(0,1,0), 180);
-                // if(closeDistance){
-                //     transform.position = indexFingerTip.transform.position + canvasHalfSize;
-                // }
-                transform.position = handUsedForPinch.transform.position + canvasHalfSize;
-                // RotateCanvas(handDelta);
+            Vector3 currentHandPosition = handUsedForPinch.transform.position;
+
+            if (isPinching)
+            {
+                Vector3 handDelta = currentHandPosition - lastHandPosition;
+                MoveCanvasFromBottomLeft(handDelta);
+                RotateCanvas(handDelta);
             }
-            // else{
-            //     Vector3 handDelta = currentHandPosition - lastHandPosition;
-            //     MoveCanvasFromBottomLeft(handDelta);
-            //     RotateCanvas(handDelta);
-            // }
-            // lastHandPosition = currentIdxFingerPosition;
+
+            lastHandPosition = currentHandPosition;
+            isPinching = true;
         }
-        wasPinching = IsPinching();
+        else
+        {
+            isPinching = false;
+        }
     }
 
     private bool IsPinching()
@@ -117,12 +105,10 @@ public class PinchMoveCanvasClose : MonoBehaviour
 
     private void RotateCanvas(Vector3 handDelta)
     {
-        // // Use the horizontal movement of the hand to determine rotation angle
+        // Use the horizontal movement of the hand to determine rotation angle
         float rotationAngle = handDelta.x * rotationSpeed * Time.deltaTime;
 
-        // // Rotate the canvas around the Z axis (to make it more visible, change as needed)
+        // Rotate the canvas around the Z axis (to make it more visible, change as needed)
         canvasTransform.Rotate(Vector3.forward, rotationAngle);
-        // canvasTransform.rotation = handUsedForPinch.transform.rotation;
     }
 }
-
