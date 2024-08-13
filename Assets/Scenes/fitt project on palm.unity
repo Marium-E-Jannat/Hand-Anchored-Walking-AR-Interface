@@ -2220,6 +2220,7 @@ MonoBehaviour:
   allowPinchSelection: 1
   canvas: {fileID: 1849468988}
   startButton: {fileID: 2070513526}
+  eventSystem: {fileID: 597638305}
 --- !u!1 &924179749
 GameObject:
   m_ObjectHideFlags: 0

@@ -10634,6 +10634,7 @@ MonoBehaviour:
   allowPinchSelection: 1
   canvas: {fileID: 683795554}
   startButton: {fileID: 142722329}
+  eventSystem: {fileID: 1874442356}
 --- !u!114 &1641053798
 MonoBehaviour:
   m_ObjectHideFlags: 0

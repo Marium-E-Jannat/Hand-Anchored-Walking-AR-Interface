@@ -8968,9 +8968,7 @@ GameObject:
   - component: {fileID: 683795559}
   - component: {fileID: 683795561}
   - component: {fileID: 683795560}
-  - component: {fileID: 683795562}
   - component: {fileID: 683795563}
-  - component: {fileID: 683795564}
   - component: {fileID: 683795565}
   m_Layer: 5
   m_Name: Canvas
@@ -9133,7 +9131,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 600, y: 600, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 300, y: 300, z: 0}
 --- !u!114 &683795560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9168,26 +9166,6 @@ MonoBehaviour:
   _selectSurface: {fileID: 0}
   _movementProvider: {fileID: 0}
   _tiebreakerScore: 0
---- !u!114 &683795562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 683795551}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27a9bbd5dcd96f24d81a6d8f99f52643, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handUsedForPinch: {fileID: 776703646}
-  canvasTransform: {fileID: 683795555}
-  moveSpeed: 1
-  rotationSpeed: 50
-  mockPinch: 0
-  indexFingerTip: {fileID: 693822767}
-  indexFingerKnuckle: {fileID: 1355355342}
-  closeDistance: 1
 --- !u!54 &683795563
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9215,23 +9193,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &683795564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 683795551}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68d33c01dab752499fd8dd783f8921e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handUsedForPinch: {fileID: 776703646}
-  canvasTransform: {fileID: 683795555}
-  moveSpeed: 1
-  rotationSpeed: 50
-  mockPinch: 0
 --- !u!114 &683795565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9245,13 +9206,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handUsedForPinch: {fileID: 776703646}
-  canvasTransform: {fileID: 683795555}
-  moveSpeed: 1
-  rotationSpeed: 50
   mockPinch: 0
   indexFingerPad: {fileID: 251680550}
-  centerHead: {fileID: 251680550}
-  closeDistance: 0
+  farDistance: 0
 --- !u!1 &690540340
 GameObject:
   m_ObjectHideFlags: 0
@@ -20520,6 +20477,7 @@ MonoBehaviour:
   allowPinchSelection: 1
   canvas: {fileID: 683795554}
   startButton: {fileID: 142722329}
+  eventSystem: {fileID: 1874442356}
 --- !u!114 &1641053798
 MonoBehaviour:
   m_ObjectHideFlags: 0

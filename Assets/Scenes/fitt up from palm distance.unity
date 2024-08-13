@@ -911,11 +911,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 569333260}
         m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HandleButtonClick
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 137065820}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 137065824}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1140,11 +1140,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 569333260}
         m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HandleButtonClick
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 183910294}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 183910298}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2104,11 +2104,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 569333260}
         m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HandleButtonClick
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 377610987}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 377610991}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2661,11 +2661,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 569333260}
         m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HandleButtonClick
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 444262887}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 444262891}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3291,11 +3291,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 569333260}
         m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HandleButtonClick
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 471329107}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 471329111}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3520,11 +3520,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 569333260}
         m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HandleButtonClick
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 562575201}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 562575205}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3976,8 +3976,9 @@ MonoBehaviour:
   rightHand: {fileID: 1594560732}
   mockHandUsedForPinchSelection: 0
   allowPinchSelection: 1
-  canvas: {fileID: 683795554}
+  canvas: {fileID: 839171710}
   startButton: {fileID: 994554978}
+  eventSystem: {fileID: 624869205}
 --- !u!114 &569333261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5115,11 +5116,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 569333260}
         m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HandleButtonClick
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 808803898}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 808803902}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5208,11 +5209,27 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 505067054499944665, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 541124696246638710, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 571358675473738879, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1145030726127544084, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1845467579908435881, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114066618324875880, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -5304,6 +5321,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3085809191287354393, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3324988993660697638, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5320,6 +5341,10 @@ PrefabInstance:
       propertyPath: _maxRayLength
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 4545382352338064481, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: _cursor
+      value: 
+      objectReference: {fileID: 1011742201}
     - target: {fileID: 5233142801893149758, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5328,9 +5353,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7547965820796259707, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7843117841878813235, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092570672683494507, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6052,11 +6085,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 569333260}
         m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HandleButtonClick
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 994554977}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 994554978}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6132,6 +6165,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 60, y: 60, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1011742201 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3264674687598545636, guid: f54012181eacade4ea242c65f804720f, type: 3}
+  m_PrefabInstance: {fileID: 829882944}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1080754566
 GameObject:
   m_ObjectHideFlags: 0
@@ -8653,11 +8691,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 569333260}
         m_TargetAssemblyTypeName: ButtonInteractionHandler, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HandleButtonClick
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1660590425}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 1660590429}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

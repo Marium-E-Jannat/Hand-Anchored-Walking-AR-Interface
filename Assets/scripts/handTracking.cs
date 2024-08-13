@@ -24,15 +24,12 @@ public class ButtonInteractionHandler : MonoBehaviour
     [SerializeField] private Button startButton;
     private GraphicRaycaster raycaster;
     private PointerEventData pointerEventData;
-    private EventSystem eventSystem;
+    public EventSystem eventSystem;
 
     private void Start()
     {
         // Get the GraphicRaycaster and EventSystem from the Canvas
         raycaster = canvas.GetComponent<GraphicRaycaster>();
-        eventSystem = GetComponent<EventSystem>();
-
-        ActivateStart();
 
         if (raycaster == null)
         {
@@ -46,17 +43,11 @@ public class ButtonInteractionHandler : MonoBehaviour
             return;
         }
 
-        // Subscribe to button click events
-        //foreach (Button button in GetComponentsInChildren<Button>())
-        //{
-        //    button.onClick.AddListener(() => HandleButtonInteraction(button));
-        //}
+        ActivateStart();
     }
 
-    public void OnButtonClick(GameObject buttonObject)
+    public void HandleButtonClick(Button button)
     {
-        Debug.Log("hey i am working");
-        Button button = buttonObject.GetComponent<Button>();
         if (button != null)
         {
             HandleButtonInteraction(button);
@@ -111,9 +102,10 @@ public class ButtonInteractionHandler : MonoBehaviour
             fittsrecorder.selec=buttonNumber;
             Recorder.btnsave = buttonNumber;
             if (buttonNumber == 0){
+                Debug.Log("HAND_TRACKING: I clicked Start button");
                 StartCoroutine(HandleStartButton(button));
             }
-            Debug.Log($"Button selected: {Recorder.selec}");
+            Debug.Log($"HAND_TRACKING: Button selected is {Recorder.selec}");
         }
 
         //lastButton = button;
@@ -158,13 +150,10 @@ public class ButtonInteractionHandler : MonoBehaviour
 
     private void Update()
     {
-        //if (lastButton != null){
-        //    ResetButtonColor(lastButton);
-        //}
-        if (IsRightHandPinching())
-        {
-            HandlePinch();
-        }
+        // if (IsRightHandPinching())
+        // {
+        //     HandlePinch();
+        // }
     }
 
     private void HandlePinch()
@@ -182,13 +171,16 @@ public class ButtonInteractionHandler : MonoBehaviour
         // Raycast using the GraphicRaycaster and the pointer event data
         raycaster.Raycast(pointerEventData, results);
 
+        Debug.Log("HAND_TRACKING: " + results.Count);
+
         // Iterate through the results
         foreach (RaycastResult result in results)
         {
             Button button = result.gameObject.GetComponent<Button>();
+            Debug.Log("HAND_TRACKING: " + button.gameObject.name);
             if (button != null)
             {
-                OnButtonClick(button.gameObject);
+                HandleButtonClick(button);
                 PinchCounter++;
                 break; // Exit loop after first button click
             }
