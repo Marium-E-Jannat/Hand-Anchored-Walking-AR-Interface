@@ -22,8 +22,8 @@ public class CanvasPositionerWithThreshold : MonoBehaviour
             ListenForPosThresChange();
             ListForRotThres();
             ListenForSpeedChange();
-            newPosition = transform.position;
         });
+        newPosition = transform.position;
     }
 
     void ListForRotThres(){
