@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
@@ -14,61 +16,33 @@ public class CircularButtonLayout : MonoBehaviour
 
     void Start(){
 
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
-        {
-            databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-            ListenForButtonRadiusChange();
-            ListenForDistRadiusChange();
-        });
+        // FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        // {
+        //     databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+        //     ListenForButtonRadiusChange();
+        //     ListenForDistRadiusChange();
+        // });
+        List<string> datafields = new List<string>{"Distance-radius","Button-radius"};
+        List<Action<float>> callbacks = new List<Action<float>> { 
+            HandleDistRadiusValueChanged,
+            HandleButtonRadiusValueChanged
+        };
+        new FirebaseTracking(datafields, callbacks);
         Radius = (float)databaseReference.Child("Distance-radius").GetValueAsync().Result.Value;
         ButtonRadius = (float)databaseReference.Child("Button-radius").GetValueAsync().Result.Value;
         HandleLayoutChange();
     }
 
-    private void ListenForButtonRadiusChange()
+    private void HandleButtonRadiusValueChanged(float newVal)
     {
-        databaseReference.Child("Button-radius").ValueChanged += HandleButtonRadiusValueChanged;
-    }
-
-    private void HandleButtonRadiusValueChanged(object sender, ValueChangedEventArgs args)
-    {
-        if (args.DatabaseError != null)
-        {
-            Debug.LogError(args.DatabaseError.Message);
-            return;
-        }
-        if (args.Snapshot.Exists)
-        {
-            Debug.Log("button radius from firebase " + args.Snapshot.Value.ToString());
-            if(float.TryParse(args.Snapshot.Value.ToString(), out float result))
-            {
-                ButtonRadius = result;
+                ButtonRadius = newVal;
                 HandleLayoutChange();
-            }
-        }
     }
 
-    private void ListenForDistRadiusChange()
+    private void HandleDistRadiusValueChanged(float newVal)
     {
-        databaseReference.Child("Distance-radius").ValueChanged += HandleDistRadiusValueChanged;
-    }
-
-    private void HandleDistRadiusValueChanged(object sender, ValueChangedEventArgs args)
-    {
-        if (args.DatabaseError != null)
-        {
-            Debug.LogError(args.DatabaseError.Message);
-            return;
-        }
-        if (args.Snapshot.Exists)
-        {
-            Debug.Log("button dist radius from firebase " + args.Snapshot.Value.ToString());
-            if (float.TryParse(args.Snapshot.Value.ToString(), out float result))
-            {
-                Radius = result;
+                Radius = newVal;
                 HandleLayoutChange();
-            }
-        }
     }
 
     void HandleLayoutChange()
