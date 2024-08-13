@@ -74,7 +74,7 @@ public class CircularButtonLayout : MonoBehaviour
     void HandleLayoutChange()
     {
         
-        startButton.transform.localPosition = new Vector3(0,0,-1);
+        startButton.transform.localPosition = new Vector3(0,0,-2);
 
         RectTransform startButtonRect = startButton.GetComponent<RectTransform>();
         startButtonRect.sizeDelta = new Vector2(ButtonRadius * 2, ButtonRadius * 2);
@@ -89,7 +89,7 @@ public class CircularButtonLayout : MonoBehaviour
             float y = (Radius+ButtonRadius) * Mathf.Sin(angle * Mathf.Deg2Rad);
 
             
-            buttons[i].transform.localPosition = new Vector3(x, y, -1);
+            buttons[i].transform.localPosition = new Vector3(x, y, -2);
             RectTransform buttonRect = buttons[i].GetComponent<RectTransform>();
             buttonRect.sizeDelta = new Vector2(ButtonRadius * 2, ButtonRadius * 2);
 
