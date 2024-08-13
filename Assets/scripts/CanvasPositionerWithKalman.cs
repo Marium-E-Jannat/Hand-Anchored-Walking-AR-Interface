@@ -32,7 +32,7 @@ public class CanvasPositionerWithKalman : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.SetPositionAndRotation(GetStableCanvasPosition(), Quaternion.Euler(GetStableCanvasOrientation()));
+        transform.SetPositionAndRotation(GetStableCanvasPosition(), controller.transform.rotation);
     }
 
     private Vector3 GetStableCanvasPosition()

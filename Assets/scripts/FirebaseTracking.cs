@@ -16,6 +16,13 @@ public class FirebaseTracking: MonoBehaviour{
                 ListenForChange(datafields[i], callbacks[i]);
             }
         });
+
+        // // initialize values
+        // for(int i = 0; i < datafields.Count; i++){
+        //     Action <float> callback = callbacks[i];
+        //     float initialVal = (float)databaseReference.Child(datafields[i]).GetValueAsync().Result.Value;
+        //     callback(initialVal);
+        // }
     }
 
     public void ListenForChange(string dataField, Action<float> callback){

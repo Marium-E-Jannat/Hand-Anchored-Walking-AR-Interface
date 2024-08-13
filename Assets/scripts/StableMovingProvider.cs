@@ -97,25 +97,26 @@ namespace Oculus.Interaction
 
         private Pose getStablePose(Pose target){
             Vector3 position = GetStableObjPosition(target.position);
-            Vector3 rotation = GetStableObjOrientation(target.rotation);
-            return new Pose(position, Quaternion.Euler(rotation));
+            // Vector3 rotation = GetStableObjOrientation(target.rotation);
+            // return new Pose(position, Quaternion.Euler(rotation));
+            return new Pose(position, target.rotation);
         }
 
         private Vector3 GetStableObjPosition(Vector3 position)
-    {
-        originPoint = position;
-        originHistory.PushBack(originPoint);
-        originPoint = kalmanV3Origin.Update(originHistory.Back(), k1q, k1r);
-        return originPoint;
-    }
+        {
+            originPoint = position;
+            originHistory.PushBack(originPoint);
+            originPoint = kalmanV3Origin.Update(originHistory.Back(), k1q, k1r);
+            return originPoint;
+        }
 
-    private Vector3 GetStableObjOrientation(Quaternion rotation)
-    {
-        Debug.Log("k2q is " + k2q);
-        originRotationVector = rotation.eulerAngles;
-        rotationHistory.PushBack(originRotationVector);
-        originRotationVector = kalmanV3Rotation.Update(rotationHistory.Back(), k2q, k2r);
-        return originRotationVector;
-    }
+        private Vector3 GetStableObjOrientation(Quaternion rotation)
+        {
+            Debug.Log("k2q is " + k2q);
+            originRotationVector = rotation.eulerAngles;
+            rotationHistory.PushBack(originRotationVector);
+            originRotationVector = kalmanV3Rotation.Update(rotationHistory.Back(), k2q, k2r);
+            return originRotationVector;
+        }
     }
 }

@@ -13958,6 +13958,7 @@ GameObject:
   - component: {fileID: 1089842074}
   - component: {fileID: 1089842073}
   - component: {fileID: 1089842072}
+  - component: {fileID: 1089842078}
   m_Layer: 0
   m_Name: '[BuildingBlock] DistanceHandGrab'
   m_TagString: Untagged
@@ -14028,7 +14029,7 @@ MonoBehaviour:
   _grabSource: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _physicsGrabbable: {fileID: 0}
-  _movementProvider: {fileID: 1089842073}
+  _movementProvider: {fileID: 1089842078}
 --- !u!114 &1089842075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14065,7 +14066,7 @@ MonoBehaviour:
     _ringRequirement: 2
     _pinkyRequirement: 1
     _unselectMode: 0
-  _movementProvider: {fileID: 1089842073}
+  _movementProvider: {fileID: 1089842078}
   _handAligment: 0
   _handGrabPoses: []
 --- !u!114 &1089842076
@@ -14110,6 +14111,18 @@ MonoBehaviour:
     _installationVariants:
     - _memberName: mode
       _value: '{"value__":0}'
+--- !u!114 &1089842078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089842070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a339ae415346844883e00f58c8af02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1095487919
 GameObject:
   m_ObjectHideFlags: 0

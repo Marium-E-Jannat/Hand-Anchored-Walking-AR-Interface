@@ -9460,7 +9460,7 @@ MonoBehaviour:
   k2qEyes: 0.00001
   k1rEyes: 0.1
   k2rEyes: 0.000001
-  controller: {fileID: 1720116394}
+  controller: {fileID: 1899096237}
 --- !u!114 &1401898568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12134,6 +12134,11 @@ CanvasRenderer:
 --- !u!4 &1864457317 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2483171112402263012, guid: f54012181eacade4ea242c65f804720f, type: 3}
+  m_PrefabInstance: {fileID: 829882944}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1899096237 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2168138017694354118, guid: f54012181eacade4ea242c65f804720f, type: 3}
   m_PrefabInstance: {fileID: 829882944}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1929630009
