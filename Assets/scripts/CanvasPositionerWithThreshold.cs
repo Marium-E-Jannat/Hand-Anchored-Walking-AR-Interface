@@ -14,6 +14,7 @@ public class CanvasPositionerWithThreshold : MonoBehaviour
 
     private DatabaseReference databaseReference;
     private Vector3 newPosition;
+    private Quaternion newRotation;
 
     void Start(){
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
@@ -24,6 +25,9 @@ public class CanvasPositionerWithThreshold : MonoBehaviour
             ListenForSpeedChange();
         });
         newPosition = transform.position;
+        newRotation = transform.rotation;
+        positionThreshold = (float)databaseReference.Child("Position-threshold").GetValueAsync().Result.Value;
+        speed = (float)databaseReference.Child("Speed").GetValueAsync().Result.Value;
     }
 
     void ListForRotThres(){
@@ -96,15 +100,17 @@ public class CanvasPositionerWithThreshold : MonoBehaviour
 
         if (Vector3.Distance(ctf.position, newPosition) > positionThreshold) {
             newPosition = ctf.position;
+            newRotation = ctf.rotation;
         }
 
         var step = speed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, newPosition, step);
+        transform.rotation = newRotation;
 
-        Quaternion tRot = Quaternion.LookRotation(ctf.position - transform.position);
-        float angleDifference = Quaternion.Angle(transform.rotation, tRot);
-        if (angleDifference > rotationThreshold) {
-            transform.rotation = ctf.rotation;
-        }
+        // Quaternion tRot = Quaternion.LookRotation(ctf.position - transform.position);
+        // float angleDifference = Quaternion.Angle(transform.rotation, tRot);
+        // if (angleDifference > rotationThreshold) {
+        //     transform.rotation = ctf.rotation;
+        // }
     }
 }

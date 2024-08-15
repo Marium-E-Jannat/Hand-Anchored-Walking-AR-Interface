@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using Firebase.Database;
 using UnityEngine;
 
 namespace Oculus.Interaction
@@ -41,24 +42,31 @@ namespace Oculus.Interaction
         KalmanFilterVector3 kalmanV3Origin, kalmanV3Rotation;
         CircularBuffer.CircularBuffer<Vector3> originHistory, rotationHistory;
         [Header("Kalman Filters")]
-        [SerializeField] private int originHistoryWindow = 4;
+        [SerializeField] private int originHistoryWindow = 6;
         [SerializeField] private int rotationHistoryWindow = 10;
-        [SerializeField] private float k1q = 0.1f, k2q = 0.0001f, k1r = 0.1f, k2r = 0.1f;
+        [SerializeField] private float k1q = 0.0001f, k2q = 0.00001f, k1r = 0.1f, k2r = 0.01f;
         public Pose Pose { get; private set; } = Pose.identity;
+        private DatabaseReference databaseReference;
         public bool Stopped => true;
 
         public StableMoveTarget(){
             ResetKalmanFilters();
-            List<string> datafields = new List<string>{"k1q","k1r","k2q","k2r","originWindow","rotationWindow"};
-            List<Action<float>> callbacks = new List<Action<float>> { 
-                (float newVal) => {k1q = newVal;},
-                (float newVal) => {k1r = newVal;},
-                (float newVal) => {k2q = newVal;},
-                (float newVal) => {k2r = newVal;},
-                (float newVal) => {originHistoryWindow = (int) newVal;},
-                (float newVal) => {rotationHistoryWindow = (int) newVal;},
-            };
-            new FirebaseTracking(datafields, callbacks);
+            // List<string> datafields = new List<string>{"k1q","k1r","k2q","k2r","originWindow","rotationWindow"};
+            // List<Action<float>> callbacks = new List<Action<float>> { 
+            //     (float newVal) => {k1q = newVal;},
+            //     (float newVal) => {k1r = newVal;},
+            //     (float newVal) => {k2q = newVal;},
+            //     (float newVal) => {k2r = newVal;},
+            //     (float newVal) => {originHistoryWindow = (int) newVal;},
+            //     (float newVal) => {rotationHistoryWindow = (int) newVal;},
+            // };
+            // new FirebaseTracking(datafields, callbacks);
+            // k1q = (float)databaseReference.Child("k1q").GetValueAsync().Result.Value;
+            // k1r = (float)databaseReference.Child("k1r").GetValueAsync().Result.Value;
+            // k2q = (float)databaseReference.Child("k2q").GetValueAsync().Result.Value;
+            // k2r = (float)databaseReference.Child("k2r").GetValueAsync().Result.Value;
+            // originHistoryWindow = (int)databaseReference.Child("originWindow").GetValueAsync().Result.Value;
+            // rotationHistoryWindow = (int)databaseReference.Child("rotationWindow").GetValueAsync().Result.Value;
         }
 
         public void StopMovement()
@@ -90,6 +98,9 @@ namespace Oculus.Interaction
         {
             kalmanV3Origin = new KalmanFilterVector3(k1q, k1r);
             kalmanV3Rotation = new KalmanFilterVector3(k2q, k2r);
+            // kalmanV3Origin.Reset();
+            // kalmanV3Rotation.Reset();
+            // kalmanV3Rotation.x = Pose.rotation.eulerAngles;
 
             originHistory = new CircularBuffer.CircularBuffer<Vector3>(originHistoryWindow);
             rotationHistory = new CircularBuffer.CircularBuffer<Vector3>(rotationHistoryWindow);
@@ -97,9 +108,9 @@ namespace Oculus.Interaction
 
         private Pose getStablePose(Pose target){
             Vector3 position = GetStableObjPosition(target.position);
-            // Vector3 rotation = GetStableObjOrientation(target.rotation);
-            // return new Pose(position, Quaternion.Euler(rotation));
-            return new Pose(position, target.rotation);
+            Vector3 rotation = GetStableObjOrientation(target.rotation);
+            return new Pose(position, Quaternion.Euler(rotation));
+            // return new Pose(position, target.rotation);
         }
 
         private Vector3 GetStableObjPosition(Vector3 position)
@@ -114,8 +125,10 @@ namespace Oculus.Interaction
         {
             Debug.Log("k2q is " + k2q);
             originRotationVector = rotation.eulerAngles;
+            originRotationVector = new Vector3((originRotationVector.x + 180) % 360, (originRotationVector.y + 180) % 360, originRotationVector.z);
             rotationHistory.PushBack(originRotationVector);
             originRotationVector = kalmanV3Rotation.Update(rotationHistory.Back(), k2q, k2r);
+            originRotationVector = new Vector3((originRotationVector.x - 180) % 360, (originRotationVector.y - 180) % 360, originRotationVector.z);
             return originRotationVector;
         }
     }

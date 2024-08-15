@@ -4344,6 +4344,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493309398}
   m_CullTransparentMesh: 1
+--- !u!1 &519374342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2168138018091862145, guid: f54012181eacade4ea242c65f804720f, type: 3}
+  m_PrefabInstance: {fileID: 829882944}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &525877848
 GameObject:
   m_ObjectHideFlags: 0
@@ -9494,11 +9499,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &1439257388 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2168138017157181538, guid: f54012181eacade4ea242c65f804720f, type: 3}
-  m_PrefabInstance: {fileID: 829882944}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1455462603
 GameObject:
   m_ObjectHideFlags: 0
@@ -13154,11 +13154,7 @@ MonoBehaviour:
   k2q: 0.0001
   k1r: 0.1
   k2r: 0.1
-  k1qEyes: 0.0001
-  k2qEyes: 0.00001
-  k1rEyes: 0.1
-  k2rEyes: 0.000001
-  controller: {fileID: 1439257388}
+  controller: {fileID: 519374342}
 --- !u!1 &2045938297
 GameObject:
   m_ObjectHideFlags: 0
