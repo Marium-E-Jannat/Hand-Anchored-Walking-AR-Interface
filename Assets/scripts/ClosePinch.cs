@@ -30,7 +30,7 @@ public class ClosePinch : MonoBehaviour
                 transform.position = indexFingerPad.transform.position;
                 transform.rotation = Quaternion.LookRotation(transform.position - headTransform.position);
                 if(farDistance){
-                    transform.position += transform.forward.normalized;
+                    transform.position += transform.forward.normalized*0.5f;
                 }
             }
         }
