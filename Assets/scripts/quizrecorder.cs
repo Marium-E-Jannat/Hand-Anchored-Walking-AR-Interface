@@ -54,8 +54,14 @@ public class QuizRecorder : MonoBehaviour
             startPanel.SetActive(false);
             questionPanel.SetActive(true);
             ShowQuestion();
+            if(AnswerLocation.Instance != null){
+                AnswerLocation.Instance.ResetText(Questions.Instance.options[quizNumber, correctAnswer]);
+            }else{
+                Debug.LogError("Answer location is not assigned to an object");
+            }
         } else{
             startPanel.SetActive(true);
+            AnswerLocation.Instance.SuspendText();
             questionPanel.SetActive(false);
         }
     }
@@ -158,7 +164,8 @@ public class QuizRecorder : MonoBehaviour
             return;
         }
 
-        questionText.text = question;
+        // questionText.text = question;
+        questionText.text = "x=?";
         // Reset colors for all buttons
         for (int i = 0; i < 4; i++)
         {
