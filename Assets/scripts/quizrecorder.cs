@@ -24,6 +24,7 @@ public class QuizRecorder : MonoBehaviour
     [SerializeField] private GameObject startPanel; 
     [SerializeField] private GameObject questionPanel; 
     private Button prevButtonClicked;
+    private bool allowSubmit = false;
 
     enum status {
         ERROR,
@@ -58,6 +59,11 @@ public class QuizRecorder : MonoBehaviour
                 AnswerLocation.Instance.ResetText(Questions.Instance.options[quizNumber, correctAnswer]);
             }else{
                 Debug.LogError("Answer location is not assigned to an object");
+            }
+            if(!allowSubmit){
+                submitButton.interactable = false;
+            }else{
+                submitButton.interactable = true;
             }
         } else{
             startPanel.SetActive(true);
@@ -118,9 +124,13 @@ public class QuizRecorder : MonoBehaviour
         }
         SetButtonColor(button, Color.green);
         prevButtonClicked = button;
+        allowSubmit = true;
     }
 
     public void OnSubmitClicked(Button button){
+        if(!allowSubmit){
+            return;
+        }
         if(prevButtonClicked != null){
             ResetButtonColor(prevButtonClicked);
         }
@@ -146,6 +156,8 @@ public class QuizRecorder : MonoBehaviour
         quizNumber += 1;
         quizInProgress = false;
         prevButtonClicked = button;
+        // reset allow submit
+        allowSubmit = false;
     }
 
     public void ShowQuestion()
