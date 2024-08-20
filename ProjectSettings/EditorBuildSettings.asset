@@ -50,6 +50,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/quiz up from palm distance.unity
     guid: 9f67787e9d628724b900d186cde08297
+  - enabled: 1
+    path: Assets/Scenes/quiz head track.unity
+    guid: e42aabab003427b41aa870f4b0582045
+  - enabled: 1
+    path: Assets/Scenes/quiz move with person.unity
+    guid: 72ca55b677c478047b05e88e9612b945
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 70a3939c33cdddf48975072d47e634b6, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8244b43e166900844a5897876059b941, type: 2}

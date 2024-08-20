@@ -184,7 +184,7 @@ public class FirebaseSceneManager : MonoBehaviour
                 sceneName = "quiz head track";
                 break;
             case 24:
-                sceneName = "quiz up move with person";
+                sceneName = "quiz move with person";
                 break;
             
             // Add more cases as needed
