@@ -177,7 +177,15 @@ public class FirebaseSceneManager : MonoBehaviour
             case 21: 
                 sceneName = "quiz distance pinch";
                 break;
-            
+            case 22: 
+                sceneName = "quiz up from palm distance";
+                break;
+            case 23:
+                sceneName = "quiz head track";
+                break;
+            case 24:
+                sceneName = "quiz up move with person";
+                break;
             
             // Add more cases as needed
         }

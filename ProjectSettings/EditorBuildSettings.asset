@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/fitt fixed screen.unity
     guid: 76bdb8b1dd7ace346bd18ef16210bc2c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/fitt project on palm (deprecated).unity
     guid: eeef84fe7df50344096d4bcb85a0168b
   - enabled: 1
@@ -47,6 +47,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/quiz distance pinch.unity
     guid: cdda0acae8ce49841a8492c4c0bbd45c
+  - enabled: 1
+    path: Assets/Scenes/quiz up from palm distance.unity
+    guid: 9f67787e9d628724b900d186cde08297
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 70a3939c33cdddf48975072d47e634b6, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8244b43e166900844a5897876059b941, type: 2}
