@@ -139,7 +139,7 @@ public class FirebaseSceneManager : MonoBehaviour
                 Debug.Log("scene 11");
                 break;
             case 12:
-                sceneName = "fitt project on palm";
+                sceneName = "fitt distance pinch";
                 Debug.Log("scene 12");
                 break;
             case 13:
