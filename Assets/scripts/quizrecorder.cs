@@ -20,8 +20,6 @@ public class QuizRecorder : MonoBehaviour
     [SerializeField] private OVRHand rightHand;
     public static bool quizInProgress;
     int quizNumber = 0;
-    int optionNumber;
-    int iteration = 0;
     public UnityEvent startNewQuiz = new UnityEvent();
     [SerializeField] private GameObject startPanel; 
     [SerializeField] private GameObject questionPanel; 
@@ -31,7 +29,6 @@ public class QuizRecorder : MonoBehaviour
         ERROR,
         SUCCESS
     }
-    bool wasPinching = false;
     public float distanceUpperThreshold = 0.2f, distanceLowerThreshold = 0.05f;
     private List<Dictionary<string, object>> responses = new List<Dictionary<string, object>>();
     private int correctAnswer;
@@ -56,60 +53,11 @@ public class QuizRecorder : MonoBehaviour
         if (quizInProgress){
             startPanel.SetActive(false);
             questionPanel.SetActive(true);
-            // if(iteration%2==0){
-            //     optionNumber = quizNumber;
-            // }else{
-            //     optionNumber = (quizNumber + 4) % 8;
-            // }
             ShowQuestion();
-            // if(wasPinching && !rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index)) {
-            //     status statusCode = CheckForSubmitPinch();
-            //     HandleOptionSelected(statusCode);
-
-            //     if (statusCode != status.OUTLIER)
-            //     {
-            //         if (statusCode == status.ERROR)
-            //         {
-            //             Debug.Log("Error detected, iteration counted.");
-            //         }
-            //         else
-            //         {
-            //             Debug.Log("Success, iteration counted.");
-            //         }
-            //         ResetButtonColor();
-            //         iteration += 1;
-            //         // reset timer for new iteration
-            //         startTime = DateTime.Now;
-            //         if (iteration == 4)
-            //         {
-            //             quizInProgress = false;
-            //             iteration = 0;
-            //             quizNumber += 1;
-            //             if (quizNumber < 4)
-            //             {
-            //                 startNewQuiz.Invoke();
-            //             }
-            //             else
-            //             {
-            //                 SaveResponsesToFirebase();
-            //                 Debug.Log("Quiz complete!");
-            //                 return;
-            //             }
-            //         }
-            //     }
-            //     else
-            //     {
-            //         // restart counter for outlier
-            //         startTime = DateTime.Now;
-            //         Debug.Log("Outlier detected, iteration not counted.");
-            //     }
-            // }
         } else{
             startPanel.SetActive(true);
             questionPanel.SetActive(false);
         }
-        // wasPinching = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
-        // reset iteration, status, metrics
     }
 
     private void SetButtonColor(Button button, Color color)
@@ -144,8 +92,9 @@ public class QuizRecorder : MonoBehaviour
         if(prevButtonClicked != null){
             ResetButtonColor(prevButtonClicked);
         }
-        quizInProgress = true;
-        SetButtonColor(button, Color.green);
+        if(quizNumber < Questions.Instance.questions.Length){
+            quizInProgress = true;
+        }
         startTime = DateTime.Now;
         prevButtonClicked = button;
     }
@@ -187,24 +136,11 @@ public class QuizRecorder : MonoBehaviour
         responses.Add(response);
         if(quizNumber == Questions.Instance.questions.Length - 1){
             SaveResponsesToFirebase();
-        }else{
-            quizNumber += 1;
-            quizInProgress = false;
         }
+        quizNumber += 1;
+        quizInProgress = false;
         prevButtonClicked = button;
     }
-
-    // bool CheckForSubmitPinch()
-    // {
-    //     if(selec == 5){
-    //         return true;
-    //     }
-    //     if(selec < 5){
-    //         pickedAnswer = selec;
-    //         submitButton.interactable = true;
-    //     }
-    //     return false;
-    // }
 
     public void ShowQuestion()
     {
@@ -244,15 +180,6 @@ public class QuizRecorder : MonoBehaviour
         }
         correctAnswer = Questions.Instance.correctAnswers[quizNumber];
     }
-
-    // private void ResetButtonColor()
-    // {
-    //     Image image = optionButtons[optionNumber].GetComponent<Image>();
-    //     if (image != null)
-    //     {
-    //         image.color = colorAtStill;
-    //     }
-    // }
 
     private void SaveResponsesToFirebase()
     {
