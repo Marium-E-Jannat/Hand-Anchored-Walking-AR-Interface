@@ -139,7 +139,7 @@ public class FirebaseSceneManager : MonoBehaviour
                 Debug.Log("scene 11");
                 break;
             case 12:
-                sceneName = "fitt distance pinch";
+                sceneName = "fitt projct on palm (deprecated)";
                 Debug.Log("scene 12");
                 break;
             case 13:
@@ -174,6 +174,10 @@ public class FirebaseSceneManager : MonoBehaviour
                 sceneName = "fitt pinch (deprecated)";
                 Debug.Log("scene 20");
                 break;
+            case 21: 
+                sceneName = "quiz distance pinch";
+                break;
+            
             
             // Add more cases as needed
         }
