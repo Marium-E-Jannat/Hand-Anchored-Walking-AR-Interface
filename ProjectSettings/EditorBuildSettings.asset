@@ -26,9 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/fitt head_track_screen.unity
     guid: 5387b8601bd36d146a234dbbf24740c7
-  - enabled: 1
-    path: Assets/Scenes/fitt move with person.unity
-    guid: a949d776d232a0f43be5e309c54f1bff
   - enabled: 0
     path: Assets/Scenes/fitt pinch and move (deprecated).unity
     guid: 3f56b9035309f034f93abca22bb17389
@@ -44,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/fitt up from palm distance.unity
     guid: 282bd71b332fe6c419590bf689a48820
+  - enabled: 1
+    path: Assets/Scenes/fitt move with person.unity
+    guid: be35d3fb23a08ab4db1af0d95d21bed8
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 70a3939c33cdddf48975072d47e634b6, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8244b43e166900844a5897876059b941, type: 2}
