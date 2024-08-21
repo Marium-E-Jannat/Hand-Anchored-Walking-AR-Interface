@@ -26862,7 +26862,7 @@ MonoBehaviour:
   - {fileID: 918258865}
   - {fileID: 1785012905}
   colorAtStill: {r: 1, g: 1, b: 1, a: 0}
-  rightHand: {fileID: 0}
+  rightHand: {fileID: 454252230}
   startNewQuiz:
     m_PersistentCalls:
       m_Calls: []

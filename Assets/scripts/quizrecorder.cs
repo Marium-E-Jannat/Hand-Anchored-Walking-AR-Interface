@@ -25,6 +25,9 @@ public class QuizRecorder : MonoBehaviour
     [SerializeField] private GameObject questionPanel; 
     private Button prevButtonClicked;
     private bool allowSubmit = false;
+    private int pinchCount = 0;
+    private DateTime optionClickedTime;
+    private bool wasPinching;
 
     enum status {
         ERROR,
@@ -64,6 +67,9 @@ public class QuizRecorder : MonoBehaviour
                 submitButton.interactable = false;
             }else{
                 submitButton.interactable = true;
+            }
+            if(IsIdxFingerPinching()){
+                pinchCount += 1;
             }
         } else{
             startPanel.SetActive(true);
@@ -125,6 +131,7 @@ public class QuizRecorder : MonoBehaviour
         SetButtonColor(button, Color.green);
         prevButtonClicked = button;
         allowSubmit = true;
+        optionClickedTime = DateTime.Now;
     }
 
     public void OnSubmitClicked(Button button){
@@ -134,7 +141,8 @@ public class QuizRecorder : MonoBehaviour
         if(prevButtonClicked != null){
             ResetButtonColor(prevButtonClicked);
         }
-        double timeTaken = DateTime.Now.Subtract(startTime).TotalMilliseconds;
+        double optionDuration = optionClickedTime.Subtract(startTime).TotalMilliseconds;
+        double submitDuration = DateTime.Now.Subtract(optionClickedTime).TotalMilliseconds;
         string statusString;
         if (pickedAnswer != correctAnswer){
             statusString = "Error";
@@ -145,8 +153,10 @@ public class QuizRecorder : MonoBehaviour
         Dictionary<string, object> response = new Dictionary<string, object>
         {
             { "Quiz number", quizNumber},
-            { "Time taken", timeTaken },
             { "Status", statusString},
+            { "Pinch count", pinchCount},
+            { "Duration from start to option", optionDuration},
+            { "Duration from option to submit", submitDuration}
         };
 
         responses.Add(response);
@@ -210,5 +220,15 @@ public class QuizRecorder : MonoBehaviour
             string key = dbReference.Child("Users").Child(userId).Child("Scene" + sceneno).Push().Key;
             dbReference.Child("Users").Child(userId).Child("fitts" + sceneno).Child(key).SetValueAsync(response);
         }
+    }
+
+    private bool IsIdxFingerPinching()
+    {
+        bool result = false;
+        if(rightHand != null){
+            result = !wasPinching && rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+            wasPinching = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        }
+        return result;
     }
 }

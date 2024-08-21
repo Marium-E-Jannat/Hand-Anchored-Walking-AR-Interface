@@ -5230,7 +5230,7 @@ MonoBehaviour:
   - {fileID: 1952617885}
   - {fileID: 2083475368}
   colorAtStill: {r: 1, g: 1, b: 1, a: 0}
-  rightHand: {fileID: 0}
+  rightHand: {fileID: 454252230}
   startNewQuiz:
     m_PersistentCalls:
       m_Calls: []
