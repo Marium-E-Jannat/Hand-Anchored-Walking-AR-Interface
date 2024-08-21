@@ -18,7 +18,7 @@ public class AnswerLocation : MonoBehaviour
                     _instance = singletonObject.AddComponent<AnswerLocation>();
                     singletonObject.name = typeof(Questions).ToString() + " (Singleton)";
 
-                    DontDestroyOnLoad(singletonObject);
+                    // DontDestroyOnLoad(singletonObject);
                 }
             }
             return _instance;
@@ -33,18 +33,18 @@ public class AnswerLocation : MonoBehaviour
     [SerializeField]
     private GameObject leftText, rightText;
     // Start is called before the first frame update
-    void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
+    // void Awake()
+    // {
+    //     if (_instance == null)
+    //     {
+    //         _instance = this;
+    //         DontDestroyOnLoad(gameObject);
+    //     }
+    //     else if (_instance != this)
+    //     {
+    //         Destroy(gameObject);
+    //     }
+    // }
     void Start()
     {
         // Locate the main camera tagged as "MainCamera"
