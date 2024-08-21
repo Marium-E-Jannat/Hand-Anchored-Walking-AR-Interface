@@ -18,7 +18,7 @@ public class QuizRecorder : MonoBehaviour
     public static int selec;
     public static DateTime startTime;
     [SerializeField] private OVRHand rightHand;
-    public static bool quizInProgress;
+    public bool quizInProgress;
     int quizNumber = 0;
     public UnityEvent startNewQuiz = new UnityEvent();
     [SerializeField] private GameObject startPanel; 
@@ -59,7 +59,7 @@ public class QuizRecorder : MonoBehaviour
             questionPanel.SetActive(true);
             ShowQuestion();
             if(AnswerLocation.Instance != null){
-                AnswerLocation.Instance.ResetText(Questions.Instance.options[quizNumber, correctAnswer]);
+                AnswerLocation.Instance.SetText(Questions.Instance.options[quizNumber, correctAnswer]);
             }else{
                 Debug.LogError("Answer location is not assigned to an object");
             }
@@ -73,7 +73,11 @@ public class QuizRecorder : MonoBehaviour
             }
         } else{
             startPanel.SetActive(true);
-            AnswerLocation.Instance.SuspendText();
+            if(AnswerLocation.Instance != null){
+                AnswerLocation.Instance.SuspendText();
+            }else{
+                Debug.LogError("Answer location is not assigned to an object");
+            }
             questionPanel.SetActive(false);
         }
     }
@@ -113,8 +117,19 @@ public class QuizRecorder : MonoBehaviour
         if(quizNumber < Questions.Instance.questions.Length){
             quizInProgress = true;
         }
-        startTime = DateTime.Now;
         prevButtonClicked = button;
+        ResetMetrics();
+        if(AnswerLocation.Instance != null){
+            AnswerLocation.Instance.ResetTxtSide();
+        }else{
+            Debug.LogError("Answer location is not assigned to an object");
+        }
+    }
+
+    private void ResetMetrics(){
+        pinchCount = 0;
+        startTime = DateTime.Now;
+        allowSubmit = false;
     }
 
     public void OnOptionClicked(Button button){
@@ -166,8 +181,6 @@ public class QuizRecorder : MonoBehaviour
         quizNumber += 1;
         quizInProgress = false;
         prevButtonClicked = button;
-        // reset allow submit
-        allowSubmit = false;
     }
 
     public void ShowQuestion()

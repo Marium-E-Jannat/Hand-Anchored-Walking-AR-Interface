@@ -58,7 +58,7 @@ public class AnswerLocation : MonoBehaviour
         text.SetActive(false);
     }
 
-    public void ResetText(string value){
+    public void SetText(string value){
         text.SetActive(true);
         text.GetComponent<TextMeshPro>().text = value.ToString();
         if(leftSide){
@@ -67,6 +67,9 @@ public class AnswerLocation : MonoBehaviour
         else{
             text.transform.SetPositionAndRotation(new Vector3(headTransform.position.x + xOffset, headTransform.position.y, headTransform.position.z), Quaternion.Euler(0, 90, 0));
         }
+    }
+
+    public void ResetTxtSide(){
         leftSide = !leftSide;
     }
 }
