@@ -30,6 +30,8 @@ public class AnswerLocation : MonoBehaviour
     private bool leftSide = false;
     [SerializeField]
     public int xOffset;
+    [SerializeField]
+    private GameObject leftText, rightText;
     // Start is called before the first frame update
     void Awake()
     {
@@ -46,7 +48,7 @@ public class AnswerLocation : MonoBehaviour
     void Start()
     {
         // Locate the main camera tagged as "MainCamera"
-        headTransform = Camera.main != null ? Camera.main.transform : null;
+        // headTransform = Camera.main != null ? Camera.main.transform : null;
 
         // Log error if Main Camera is not found
         if (headTransform == null)
@@ -55,18 +57,28 @@ public class AnswerLocation : MonoBehaviour
         }
     }
     public void SuspendText(){
-        text.SetActive(false);
+        // text.SetActive(false);
+        leftText.SetActive(false);
+        rightText.SetActive(false);
     }
 
     public void SetText(string value){
-        text.SetActive(true);
-        text.GetComponent<TextMeshPro>().text = value.ToString();
+        // text.SetActive(true);
+        // text.GetComponent<TextMeshPro>().text = value.ToString();
+        // if(leftSide){
+        //     text.transform.SetPositionAndRotation(new Vector3(headTransform.position.x - xOffset, headTransform.position.y, headTransform.position.z), Quaternion.Euler(0, 270, 0));
+        // }
+        // else{
+        //     text.transform.SetPositionAndRotation(new Vector3(headTransform.position.x + xOffset, headTransform.position.y, headTransform.position.z), Quaternion.Euler(0, 90, 0));
+        // }
         if(leftSide){
-            text.transform.SetPositionAndRotation(new Vector3(headTransform.position.x - xOffset, headTransform.position.y, headTransform.position.z), Quaternion.Euler(0, 270, 0));
+            leftText.SetActive(true);
+            leftText.GetComponent<TextMeshPro>().text = value.ToString();
+        }else{
+            rightText.SetActive(true);
+            rightText.GetComponent<TextMeshPro>().text = value.ToString();
         }
-        else{
-            text.transform.SetPositionAndRotation(new Vector3(headTransform.position.x + xOffset, headTransform.position.y, headTransform.position.z), Quaternion.Euler(0, 90, 0));
-        }
+        transform.position = headTransform.position;
     }
 
     public void ResetTxtSide(){
