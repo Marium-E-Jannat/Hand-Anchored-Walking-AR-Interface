@@ -78,6 +78,9 @@ public class AnswerLocation : MonoBehaviour
             rightText.SetActive(true);
             rightText.GetComponent<TextMeshPro>().text = value.ToString();
         }
+    }
+
+    void Update(){
         transform.position = headTransform.position;
     }
 
