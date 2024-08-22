@@ -5243,6 +5243,9 @@ MonoBehaviour:
   k2q: 0.00001
   k1r: 0.1
   k2r: 0.01
+  x: -0.1
+  y: 0
+  z: 0
 --- !u!1 &690540340
 GameObject:
   m_ObjectHideFlags: 0
@@ -13056,5 +13059,5 @@ SceneRoots:
   - {fileID: 1641053799}
   - {fileID: 1567906948}
   - {fileID: 1874442357}
-  - {fileID: 683795555}
   - {fileID: 1932772510}
+  - {fileID: 683795555}
