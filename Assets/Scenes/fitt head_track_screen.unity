@@ -5230,7 +5230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8f4ac3c8718d54f8defe25302f3001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceFromHead: 2
+  distanceFromHead: 0.5
   offset: {x: 0, y: 0, z: 0}
 --- !u!1 &690540340
 GameObject:

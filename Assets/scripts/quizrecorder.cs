@@ -200,7 +200,7 @@ public class QuizRecorder : MonoBehaviour
         }
 
         // questionText.text = question;
-        questionText.text = "x=?";
+        questionText.text = "x+0=?";
         // Reset colors for all buttons
         for (int i = 0; i < 4; i++)
         {
