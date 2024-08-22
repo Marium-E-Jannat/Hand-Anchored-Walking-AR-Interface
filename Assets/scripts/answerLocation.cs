@@ -30,6 +30,8 @@ public class AnswerLocation : MonoBehaviour
     public int xOffset;
     [SerializeField]
     private GameObject leftText, rightText;
+    [SerializeField]
+    private GameObject leftArrow, rightArrow;
     // Start is called before the first frame update
     // void Awake()
     // {
@@ -57,7 +59,9 @@ public class AnswerLocation : MonoBehaviour
     public void SuspendText(){
         // text.SetActive(false);
         leftText.SetActive(false);
+        leftArrow.SetActive(false);
         rightText.SetActive(false);
+        rightArrow.SetActive(false);
     }
 
     public void SetText(string value){
@@ -69,12 +73,17 @@ public class AnswerLocation : MonoBehaviour
         // else{
         //     text.transform.SetPositionAndRotation(new Vector3(headTransform.position.x + xOffset, headTransform.position.y, headTransform.position.z), Quaternion.Euler(0, 90, 0));
         // }
+        if(leftText == null || leftArrow == null || rightText == null || rightArrow == null){
+            Debug.LogError("Answer indictors are not set properly.");
+        }
         if(leftSide){
             leftText.SetActive(true);
             leftText.GetComponent<TextMeshPro>().text = value.ToString();
+            leftArrow.SetActive(true);
         }else{
             rightText.SetActive(true);
             rightText.GetComponent<TextMeshPro>().text = value.ToString();
+            rightArrow.SetActive(true);
         }
     }
 
