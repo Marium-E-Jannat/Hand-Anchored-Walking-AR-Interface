@@ -25,8 +25,6 @@ public class AnswerLocation : MonoBehaviour
         }
     }
     public Transform headTransform;
-    [SerializeField]
-    private GameObject text;
     private bool leftSide = false;
     [SerializeField]
     public int xOffset;
