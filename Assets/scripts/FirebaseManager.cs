@@ -139,7 +139,7 @@ public class FirebaseSceneManager : MonoBehaviour
                 Debug.Log("scene 11");
                 break;
             case 12:
-                sceneName = "fitt project on palm";
+                sceneName = "fitt projct on palm (deprecated)";
                 Debug.Log("scene 12");
                 break;
             case 13:
@@ -147,16 +147,44 @@ public class FirebaseSceneManager : MonoBehaviour
                 Debug.Log("scene 13");
                 break;
             case 14:
-                sceneName = "fitt wrist";
+                sceneName = "fitt up from palm distance";
                 Debug.Log("scene 14");
                 break;
             case 15:
-                sceneName = "fitt pinch";
+                sceneName = "fitt wrist";
                 Debug.Log("scene 15");
                 break;
             case 16:
-                sceneName = "fitt pinch and move";
+                sceneName = "fitt wrist distance";
                 Debug.Log("scene 16");
+                break;
+            case 17:
+                sceneName = "fitt pinch and move";
+                Debug.Log("scene 17");
+                break;
+            case 18:
+                sceneName = "fitt pinch and move distance";
+                Debug.Log("scene 18");
+                break;
+            case 19:
+                sceneName = "fitt pinch and move (deprecated)";
+                Debug.Log("scene 19");
+                break;
+            case 20:
+                sceneName = "fitt pinch (deprecated)";
+                Debug.Log("scene 20");
+                break;
+            case 21: 
+                sceneName = "quiz distance pinch";
+                break;
+            case 22: 
+                sceneName = "quiz up from palm distance";
+                break;
+            case 23:
+                sceneName = "quiz head track";
+                break;
+            case 24:
+                sceneName = "quiz move with person";
                 break;
             
             // Add more cases as needed

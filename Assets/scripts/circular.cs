@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
@@ -8,76 +10,48 @@ public class CircularButtonLayout : MonoBehaviour
 {
     public Button startButton;  
     public Button[] buttons;   
-    private float radius = 100f; 
-    private float buttonRadius = 50f;
+    public  static float Radius {get; private set;}
+    public static float ButtonRadius {get; private set;}
     private DatabaseReference databaseReference;
 
     void Start(){
 
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
-        {
-            databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-            ListenForButtonRadiusChange();
-            ListenForDistRadiusChange();
-        });
-        radius = (float)databaseReference.Child("Distance-radius").GetValueAsync().Result.Value;
-        buttonRadius = (float)databaseReference.Child("Button-radius").GetValueAsync().Result.Value;
+        // FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        // {
+        //     databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+        //     ListenForButtonRadiusChange();
+        //     ListenForDistRadiusChange();
+        // });
+        List<string> datafields = new List<string>{"Distance-radius","Button-radius"};
+        List<Action<float>> callbacks = new List<Action<float>> { 
+            HandleDistRadiusValueChanged,
+            HandleButtonRadiusValueChanged
+        };
+        new FirebaseTracking(datafields, callbacks);
+        Radius = (float)databaseReference.Child("Distance-radius").GetValueAsync().Result.Value;
+        ButtonRadius = (float)databaseReference.Child("Button-radius").GetValueAsync().Result.Value;
         HandleLayoutChange();
     }
 
-    private void ListenForButtonRadiusChange()
+    private void HandleButtonRadiusValueChanged(float newVal)
     {
-        databaseReference.Child("Button-radius").ValueChanged += HandleButtonRadiusValueChanged;
-    }
-
-    private void HandleButtonRadiusValueChanged(object sender, ValueChangedEventArgs args)
-    {
-        if (args.DatabaseError != null)
-        {
-            Debug.LogError(args.DatabaseError.Message);
-            return;
-        }
-        if (args.Snapshot.Exists)
-        {
-            Debug.Log("button radius from firebase " + args.Snapshot.Value.ToString());
-            if(float.TryParse(args.Snapshot.Value.ToString(), out float result))
-            {
-                buttonRadius = result;
+                ButtonRadius = newVal;
                 HandleLayoutChange();
-            }
-        }
     }
 
-    private void ListenForDistRadiusChange()
+    private void HandleDistRadiusValueChanged(float newVal)
     {
-        databaseReference.Child("Distance-radius").ValueChanged += HandleDistRadiusValueChanged;
-    }
-
-    private void HandleDistRadiusValueChanged(object sender, ValueChangedEventArgs args)
-    {
-        if (args.DatabaseError != null)
-        {
-            Debug.LogError(args.DatabaseError.Message);
-            return;
-        }
-        if (args.Snapshot.Exists)
-        {
-            Debug.Log("button dist radius from firebase " + args.Snapshot.Value.ToString());
-            if (float.TryParse(args.Snapshot.Value.ToString(), out float result))
-            {
-                radius = result;
+                Radius = newVal;
                 HandleLayoutChange();
-            }
-        }
     }
 
     void HandleLayoutChange()
     {
         
-        startButton.transform.localPosition = new Vector3(0,0,-1);
+        startButton.transform.localPosition = new Vector3(0,0,-2);
 
         RectTransform startButtonRect = startButton.GetComponent<RectTransform>();
-        startButtonRect.sizeDelta = new Vector2(buttonRadius * 2, buttonRadius * 2);
+        startButtonRect.sizeDelta = new Vector2(ButtonRadius * 2, ButtonRadius * 2);
         float angleStep = 360f / buttons.Length;
         float angle = 0f;
 
@@ -85,13 +59,13 @@ public class CircularButtonLayout : MonoBehaviour
         for (int i = 0; i < buttons.Length; i++)
         {
             
-            float x = (radius+buttonRadius) * Mathf.Cos(angle * Mathf.Deg2Rad);
-            float y = (radius+buttonRadius) * Mathf.Sin(angle * Mathf.Deg2Rad);
+            float x = (Radius+ButtonRadius) * Mathf.Cos(angle * Mathf.Deg2Rad);
+            float y = (Radius+ButtonRadius) * Mathf.Sin(angle * Mathf.Deg2Rad);
 
             
-            buttons[i].transform.localPosition = new Vector3(x, y, -1);
+            buttons[i].transform.localPosition = new Vector3(x, y, -2);
             RectTransform buttonRect = buttons[i].GetComponent<RectTransform>();
-            buttonRect.sizeDelta = new Vector2(buttonRadius * 2, buttonRadius * 2);
+            buttonRect.sizeDelta = new Vector2(ButtonRadius * 2, ButtonRadius * 2);
 
            
             angle += angleStep;

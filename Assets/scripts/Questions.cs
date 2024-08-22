@@ -43,6 +43,7 @@ public class Questions : MonoBehaviour
 
     void Start()
     {
+        // unused for now
         questions = new string[]
         {
             "x=0, x+3=?",
