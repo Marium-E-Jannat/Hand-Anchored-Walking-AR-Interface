@@ -15904,7 +15904,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -1941024469008552700, guid: 3a4375d5a31401e47ac4555a2eacb587, type: 3}
       propertyPath: _providedSkeletonType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 92125196277170226, guid: 3a4375d5a31401e47ac4555a2eacb587, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15920,7 +15920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 895100416143248982, guid: 3a4375d5a31401e47ac4555a2eacb587, type: 3}
       propertyPath: _skeletonType
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1319808731953269928, guid: 3a4375d5a31401e47ac4555a2eacb587, type: 3}
       propertyPath: m_Enabled

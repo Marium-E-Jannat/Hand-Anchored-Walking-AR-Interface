@@ -42,6 +42,7 @@ public class QuizRecorder : MonoBehaviour
     private int correctAnswer;
     private int pickedAnswer;
     [SerializeField] private Button submitButton;
+    TMP_Text indicator;
 
     void Start()
     {
@@ -51,6 +52,14 @@ public class QuizRecorder : MonoBehaviour
         {
             dbReference = FirebaseDatabase.DefaultInstance.RootReference;
         });
+        if(head == null || chest == null){
+            Debug.LogError("Head or chest anchor is not set properly.");
+        }
+        if(startPanel.transform.Find("Instruction") != null){
+            indicator= startPanel.transform.Find("Instruction").GetComponent<TMP_Text>();
+        }else{
+            Debug.LogError("Start panel doesn't have Instruction child.");
+        }
         colorAtStill = optionButtons[1].colors.normalColor;
         quizInProgress = false;
         questionPanel.SetActive(false);
@@ -78,7 +87,6 @@ public class QuizRecorder : MonoBehaviour
         } else{
             startPanel.SetActive(true);
             questionPanel.SetActive(false);
-            TMP_Text indicator= startPanel.transform.Find("Instruction").GetComponent<TMP_Text>();
             if(isHeadCenter()){
                 indicator.text = instruction1;
                 indicator.color = Color.black;
@@ -95,7 +103,7 @@ public class QuizRecorder : MonoBehaviour
     }
 
     private bool isHeadCenter(){
-        float rotationDifference = (head.transform.rotation.y - chest.transform.rotation.y)*Mathf.Rad2Deg;
+        float rotationDifference = (head.rotation.y - chest.rotation.y)*Mathf.Rad2Deg;
         return rotationDifference > -3f && rotationDifference < 3f;
     }
 
