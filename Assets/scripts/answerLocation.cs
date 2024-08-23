@@ -32,6 +32,7 @@ public class AnswerLocation : MonoBehaviour
     private GameObject leftText, rightText;
     [SerializeField]
     private GameObject leftArrow, rightArrow;
+    private Vector3 prevForward;
     // Start is called before the first frame update
     // void Awake()
     // {
@@ -55,6 +56,7 @@ public class AnswerLocation : MonoBehaviour
         {
             Debug.LogError("Main Camera not found. Ensure your XR Origin has a camera tagged as 'MainCamera'.");
         }
+        prevForward = headTransform.forward;
     }
     public void SuspendText(){
         // text.SetActive(false);
@@ -89,6 +91,11 @@ public class AnswerLocation : MonoBehaviour
 
     void Update(){
         transform.position = headTransform.position;
+        float angle = Vector3.Angle(headTransform.forward, prevForward);
+        if(angle > 90f){
+            transform.rotation = headTransform.rotation;
+            prevForward = headTransform.forward;
+        }
     }
 
     public void ResetTxtSide(){

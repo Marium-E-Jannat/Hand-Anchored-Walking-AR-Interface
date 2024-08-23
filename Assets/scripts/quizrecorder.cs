@@ -103,8 +103,10 @@ public class QuizRecorder : MonoBehaviour
     }
 
     private bool isHeadCenter(){
-        float rotationDifference = (head.rotation.y - chest.rotation.y)*Mathf.Rad2Deg;
-        return rotationDifference > -3f && rotationDifference < 3f;
+        // float rotationDifference = Vector3.Angle(head.forward, chest.forward);
+        // //  (head.rotation.y - chest.rotation.y)*Mathf.Rad2Deg;
+        // return rotationDifference > -3f && rotationDifference < 3f;
+        return true;
     }
 
     private void SetButtonColor(Button button, Color color)
