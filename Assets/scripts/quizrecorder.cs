@@ -28,6 +28,10 @@ public class QuizRecorder : MonoBehaviour
     private int pinchCount = 0;
     private DateTime optionClickedTime;
     private bool wasPinching;
+    [Header("Center anchors")]
+    [SerializeField] private Transform head, chest;
+    const string instruction1 = "Press Start to view the question.";
+    const string instruction2 = "Align your head to center to continue.";
 
     enum status {
         ERROR,
@@ -73,13 +77,26 @@ public class QuizRecorder : MonoBehaviour
             }
         } else{
             startPanel.SetActive(true);
+            questionPanel.SetActive(false);
+            TMP_Text indicator= startPanel.transform.Find("Instruction").GetComponent<TMP_Text>();
+            if(isHeadCenter()){
+                indicator.text = instruction1;
+                indicator.color = Color.black;
+            }else{
+                indicator.text = instruction2;
+                indicator.color = Color.yellow;
+            }
             if(AnswerLocation.Instance != null){
                 AnswerLocation.Instance.SuspendText();
             }else{
                 Debug.LogError("Answer location is not assigned to an object");
             }
-            questionPanel.SetActive(false);
         }
+    }
+
+    private bool isHeadCenter(){
+        float rotationDifference = (head.transform.rotation.y - chest.transform.rotation.y)*Mathf.Rad2Deg;
+        return rotationDifference > -3f && rotationDifference < 3f;
     }
 
     private void SetButtonColor(Button button, Color color)
@@ -111,6 +128,9 @@ public class QuizRecorder : MonoBehaviour
     }
 
     public void OnStartClicked(Button button){
+        if(!isHeadCenter()){
+            return;
+        }
         if(prevButtonClicked != null){
             ResetButtonColor(prevButtonClicked);
         }

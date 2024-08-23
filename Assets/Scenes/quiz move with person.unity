@@ -10998,7 +10998,7 @@ GameObject:
   - component: {fileID: 1316674016}
   - component: {fileID: 1316674015}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Instruction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11908,6 +11908,8 @@ MonoBehaviour:
       m_Calls: []
   startPanel: {fileID: 2063705819}
   questionPanel: {fileID: 982841116}
+  head: {fileID: 1932772511}
+  chest: {fileID: 407683372}
   distanceUpperThreshold: 0.2
   distanceLowerThreshold: 0.05
   submitButton: {fileID: 1627891641}
@@ -16009,6 +16011,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a4375d5a31401e47ac4555a2eacb587, type: 3}
+--- !u!4 &1932772511 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6503000594476462651, guid: 3a4375d5a31401e47ac4555a2eacb587, type: 3}
+  m_PrefabInstance: {fileID: 1932772510}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1989238558
 GameObject:
   m_ObjectHideFlags: 0
