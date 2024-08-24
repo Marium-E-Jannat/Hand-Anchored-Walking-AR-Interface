@@ -9,7 +9,7 @@ using System;
 public class ButtonInteractionHandler : MonoBehaviour
 {
     public Color defaultColor = Color.white;
-    public Color selectedColor = Color.green;
+    public Color hoverColor = Color.green;
     public Color genericColor;
     //private Button lastButton;
     public static bool clicked = false;
@@ -52,6 +52,28 @@ public class ButtonInteractionHandler : MonoBehaviour
         {
             HandleButtonInteraction(button);
         }
+    }
+
+    public void HandleButtonHover(Button button){
+        if (button != null){
+            button.GetComponent<Image>().color = hoverColor;
+        }
+        if(button.GetComponent<ButtonState>() == null){
+            Debug.LogError("button state is not assigned to button");
+            return;
+        }
+        button.GetComponent<ButtonState>().state = ButtonState.State.HOVER;
+    }
+
+    public void HandleButtonUnhover(Button button){
+        if(button != null){
+            button.GetComponent<Image>().color = defaultColor;
+        }
+        if(button.GetComponent<ButtonState>() == null){
+            Debug.LogError("button state is not assigned to button");
+            return;
+        }
+        button.GetComponent<ButtonState>().state = ButtonState.State.STILL;
     }
 
     private IEnumerator HandleStartButton(Button button){

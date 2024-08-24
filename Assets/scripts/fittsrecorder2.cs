@@ -126,8 +126,15 @@ public class fittsrecorder2 : MonoBehaviour
     public void ShowQuestion()
     {
         Debug.Log("Showing question at index: " + optionNumber);
-        Image image = optionButtons[optionNumber].GetComponent<Image>();
-        image.color = Color.red;
+        Button button = optionButtons[optionNumber];
+        Image image = button.GetComponent<Image>();
+        if(button.GetComponent<ButtonState>() == null){
+            Debug.LogError("button state is not assigned to button");
+            return;
+        }
+        if(button.GetComponent<ButtonState>().state != ButtonState.State.HOVER){
+            image.color = Color.red;
+        }
     }
 
     private void ResetButtonColor()
