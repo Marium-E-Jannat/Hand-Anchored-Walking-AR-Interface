@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Firebase.Database;
 using TMPro;
 using UnityEngine;
 
@@ -33,6 +36,8 @@ public class AnswerLocation : MonoBehaviour
     [SerializeField]
     private GameObject leftArrow, rightArrow;
     private Vector3 prevForward;
+    private float wallDist;
+    private DatabaseReference databaseReference;
     // Start is called before the first frame update
     // void Awake()
     // {
@@ -57,7 +62,28 @@ public class AnswerLocation : MonoBehaviour
             Debug.LogError("Main Camera not found. Ensure your XR Origin has a camera tagged as 'MainCamera'.");
         }
         prevForward = headTransform.forward;
+
+        // set up listen hook to firebase
+        List<string> datafields = new List<string>{"Wall-distance"};
+        List<Action<float>> callbacks = new List<Action<float>> { 
+            HandleWallDistChanged,
+        };
+        new FirebaseTracking(datafields, callbacks);
+        wallDist = (float)databaseReference.Child("Distance-radius").GetValueAsync().Result.Value;
+        SetTextOnWall();
     }
+
+    private void HandleWallDistChanged(float newVal)
+    {
+        wallDist = newVal;
+        SetTextOnWall();
+    }
+
+    private void SetTextOnWall(){
+        leftText.transform.position = new Vector3(-wallDist, leftText.transform.position.y, leftText.transform.position.z);
+        rightText.transform.position = new Vector3(wallDist, rightText.transform.position.y, rightText.transform.position.z);
+    }
+
     public void SuspendText(){
         // text.SetActive(false);
         leftText.SetActive(false);
