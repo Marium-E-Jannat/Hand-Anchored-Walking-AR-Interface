@@ -71,7 +71,7 @@ public class fittsrecorder2 : MonoBehaviour
                     iteration += 1;
                     // reset timer for new iteration
                     startTime = DateTime.Now;
-                    if (iteration == 4)
+                    if (iteration == 5)
                     {
                         quizInProgress = false;
                         iteration = 0;

@@ -29,9 +29,9 @@ public class QuizRecorder : MonoBehaviour
     private DateTime optionClickedTime;
     private bool wasPinching;
     [Header("Center anchors")]
-    [SerializeField] private Transform head, chest;
+    [SerializeField] private Transform head;
     const string instruction1 = "Press Start to view the question.";
-    const string instruction2 = "Align your head to center to continue.";
+    const string instruction2 = "Reorient the canvas to the center and look forward to continue.";
 
     enum status {
         ERROR,
@@ -52,8 +52,8 @@ public class QuizRecorder : MonoBehaviour
         {
             dbReference = FirebaseDatabase.DefaultInstance.RootReference;
         });
-        if(head == null || chest == null){
-            Debug.LogError("Head or chest anchor is not set properly.");
+        if(head == null){
+            Debug.LogError("Head anchor is not set properly.");
         }
         if(startPanel.transform.Find("Instruction") != null){
             indicator= startPanel.transform.Find("Instruction").GetComponent<TMP_Text>();
@@ -103,10 +103,8 @@ public class QuizRecorder : MonoBehaviour
     }
 
     private bool isHeadCenter(){
-        // float rotationDifference = Vector3.Angle(head.forward, chest.forward);
-        // //  (head.rotation.y - chest.rotation.y)*Mathf.Rad2Deg;
-        // return rotationDifference > -3f && rotationDifference < 3f;
-        return true;
+        Vector3 headRotation = head.rotation.eulerAngles;
+        return headRotation.y > -10f && headRotation.y < 10f;
     }
 
     private void SetButtonColor(Button button, Color color)
