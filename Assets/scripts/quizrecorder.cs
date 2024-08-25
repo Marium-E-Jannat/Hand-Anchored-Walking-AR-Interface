@@ -44,6 +44,9 @@ public class QuizRecorder : MonoBehaviour
     [SerializeField] private Button submitButton;
     TMP_Text indicator;
 
+    public AudioSource audioSource;
+    public AudioSource startAudio;
+
     void Start()
     {
         firebaseManager = FirebaseSceneManager.Instance;
@@ -82,6 +85,7 @@ public class QuizRecorder : MonoBehaviour
                 submitButton.interactable = true;
             }
             if(IsIdxFingerPinching()){
+                // audioSource.Play();
                 pinchCount += 1;
             }
         } else{
@@ -139,6 +143,8 @@ public class QuizRecorder : MonoBehaviour
         if(!isHeadCenter()){
             return;
         }
+
+        // startAudio.Play();
         if(prevButtonClicked != null){
             ResetButtonColor(prevButtonClicked);
         }
@@ -267,8 +273,9 @@ public class QuizRecorder : MonoBehaviour
     {
         bool result = false;
         if(rightHand != null){
-            result = !wasPinching && rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
-            wasPinching = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+            var nowPinching = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+            result = !wasPinching && nowPinching;
+            wasPinching = nowPinching;
         }
         return result;
     }

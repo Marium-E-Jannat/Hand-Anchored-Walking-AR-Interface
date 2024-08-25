@@ -5450,6 +5450,8 @@ MonoBehaviour:
   distanceUpperThreshold: 0.2
   distanceLowerThreshold: 0.05
   submitButton: {fileID: 2015920726}
+  audioSource: {fileID: 0}
+  startAudio: {fileID: 0}
 --- !u!1 &656473757
 GameObject:
   m_ObjectHideFlags: 0
@@ -17009,6 +17011,9 @@ MonoBehaviour:
       m_Calls: []
   _whenSelect:
     m_PersistentCalls:
+      m_Calls: []
+  _whenUnselect:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 653729476}
         m_TargetAssemblyTypeName: QuizRecorder, Assembly-CSharp
@@ -17022,9 +17027,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _whenUnselect:
-    m_PersistentCalls:
-      m_Calls: []
   _whenInteractorViewAdded:
     m_PersistentCalls:
       m_Calls: []
