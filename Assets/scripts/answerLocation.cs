@@ -117,11 +117,11 @@ public class AnswerLocation : MonoBehaviour
 
     void Update(){
         transform.position = headTransform.position;
-        float angle = Vector3.Angle(headTransform.forward, prevForward);
-        if(angle > 90f){
-            transform.rotation = headTransform.rotation;
-            prevForward = headTransform.forward;
-        }
+        // float angle = Vector3.Angle(headTransform.forward, prevForward);
+        // if(angle > 90f){
+        //     transform.rotation = headTransform.rotation;
+        //     prevForward = headTransform.forward;
+        // }
     }
 
     public void ResetTxtSide(){
