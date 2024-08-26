@@ -37,26 +37,10 @@ public class AnswerLocation : MonoBehaviour
     private GameObject leftArrow, rightArrow;
     private Vector3 prevForward;
     private float wallDist;
+    private float txtAngle;
     private DatabaseReference databaseReference;
-    // Start is called before the first frame update
-    // void Awake()
-    // {
-    //     if (_instance == null)
-    //     {
-    //         _instance = this;
-    //         DontDestroyOnLoad(gameObject);
-    //     }
-    //     else if (_instance != this)
-    //     {
-    //         Destroy(gameObject);
-    //     }
-    // }
     void Start()
     {
-        // Locate the main camera tagged as "MainCamera"
-        // headTransform = Camera.main != null ? Camera.main.transform : null;
-
-        // Log error if Main Camera is not found
         if (headTransform == null)
         {
             Debug.LogError("Main Camera not found. Ensure your XR Origin has a camera tagged as 'MainCamera'.");
@@ -64,12 +48,14 @@ public class AnswerLocation : MonoBehaviour
         prevForward = headTransform.forward;
 
         // set up listen hook to firebase
-        List<string> datafields = new List<string>{"Wall-distance"};
+        List<string> datafields = new List<string>{"Wall-distance", "Text-angle"};
         List<Action<float>> callbacks = new List<Action<float>> { 
             HandleWallDistChanged,
+            HandleTxtAngleChanged,
         };
         new FirebaseTracking(datafields, callbacks);
-        wallDist = (float)databaseReference.Child("Distance-radius").GetValueAsync().Result.Value;
+        wallDist = (float)databaseReference.Child("Wall-distance").GetValueAsync().Result.Value;
+        txtAngle = (float)databaseReference.Child("Text-angle").GetValueAsync().Result.Value;
         SetTextOnWall();
     }
 
@@ -79,9 +65,22 @@ public class AnswerLocation : MonoBehaviour
         SetTextOnWall();
     }
 
+    private void HandleTxtAngleChanged(float newVal)
+    {
+        txtAngle = newVal;
+        SetTextOnWall();
+    }
+
     private void SetTextOnWall(){
-        leftText.transform.position = new Vector3(-wallDist, leftText.transform.position.y, leftText.transform.position.z);
-        rightText.transform.position = new Vector3(wallDist, rightText.transform.position.y, rightText.transform.position.z);
+        // leftText.transform.position = new Vector3(-wallDist, leftText.transform.position.y, leftText.transform.position.z);
+        // rightText.transform.position = new Vector3(wallDist, rightText.transform.position.y, rightText.transform.position.z);
+        var rot = Quaternion.AngleAxis(txtAngle,Vector3.up);
+        var negRot = Quaternion.AngleAxis(-txtAngle, Vector3.up);
+        // a local direction vector that points in forward direction but also an angle forward.
+        // direction in world space you need to transform it.
+        float forwardDist = wallDist / Mathf.Sin(txtAngle*Mathf.Deg2Rad);
+        leftText.transform.position = transform.TransformDirection(negRot*Vector3.forward).normalized * forwardDist;
+        rightText.transform.position = transform.TransformDirection(rot*Vector3.forward).normalized * forwardDist;
     }
 
     public void SuspendText(){
