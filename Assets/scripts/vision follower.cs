@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class FollowHeadXR : MonoBehaviour
 {
-    public float distanceFromHead = 2.0f; // Distance from the head to position the canvas
+    public float distanceFromHead; // Distance from the head to position the canvas
     public Vector3 offset = Vector3.zero; // Offset from the head's position
 
     private Transform headTransform;

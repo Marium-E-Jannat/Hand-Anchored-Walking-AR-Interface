@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
+using UnityEngine.Events;
 
 public class fittsrecorder : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class fittsrecorder : MonoBehaviour
     public Color genericColor2;
     public static bool firsel = true;
     public static int selec;
-    public static int btnsave = -1;
     private PanelManager panelManager;
     [SerializeField] private OVRHand rightHand;
     [SerializeField] private Canvas canvas;
@@ -67,8 +67,9 @@ public class fittsrecorder : MonoBehaviour
         yield return new WaitUntil(() => selec == 0);
     }
 
-    void CheckForPinch()
+    void CheckForPinch(int send)
     {
+        Debug.Log("send is " + send);
         if (rightHand != null)
         {
             bool pinchDetected = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
@@ -84,7 +85,9 @@ public class fittsrecorder : MonoBehaviour
 
                         Vector3 pinchPosition = cursor.transform.position;
 
-                        Button button = optionButtons[cindex];
+                        // Button button = optionButtons[cindex];
+                        Button button = optionButtons[send];
+                        Debug.Log("send is " + send);
                         Vector3 buttonPosition = button.transform.position;
                         float distance = Vector2.Distance(
                             new Vector2(pinchPosition.x, pinchPosition.y),
@@ -118,6 +121,8 @@ public class fittsrecorder : MonoBehaviour
             currentQuestionIndex = qindex;
             cindex=-1;
             yield return StartCoroutine(hello());
+            // Wait for the right hand pinching to reset
+            yield return new WaitUntil(()=>rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index) == false);
 
             Image image = startButton.GetComponent<Image>();
             image.color = genericColor2;
@@ -130,13 +135,15 @@ public class fittsrecorder : MonoBehaviour
 
             for (int i = 0; i < 10; i++)
             {
-                Debug.Log("iteration is "+i);
+
+                Debug.Log("iteration is " + i);
+                Debug.Log("send before question shown is " + send);
                 ShowQuestion(send);
                 selec = -1;
 
                 yield return new WaitUntil(() =>
                 {
-                    CheckForPinch();
+                    CheckForPinch(send);
                     return selec != -1;
                 });
 
@@ -151,7 +158,7 @@ public class fittsrecorder : MonoBehaviour
                 {
                     Debug.Log("Error detected, iteration counted.");
                     selec = -1;
-                     t ^= 1;
+                    t ^= 1;
                     send = (t == 1) ? second : first;
                     continue;
                 }
@@ -182,7 +189,8 @@ public class fittsrecorder : MonoBehaviour
         }
 
         cindex = send;
-        Image image = optionButtons[cindex].GetComponent<Image>();
+        // Image image = optionButtons[cindex].GetComponent<Image>();
+        Image image = optionButtons[send].GetComponent<Image>();
         image.color = Color.red;
 
         //optionButtons[8].transform.position = optionButtons[cindex].transform.position;

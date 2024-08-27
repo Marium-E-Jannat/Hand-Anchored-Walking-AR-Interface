@@ -3,32 +3,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Collections;
+using System;
 
 public class ButtonInteractionHandler : MonoBehaviour
 {
     public Color defaultColor = Color.white;
-    public Color selectedColor = Color.green;
+    public Color hoverColor = Color.green;
     public Color genericColor;
-    private Button lastButton;
+    //private Button lastButton;
     public static bool clicked = false;
     public static int PinchCounter;
     public static float distance;
-    private bool _isPinching = false;
 
     [SerializeField] private OVRHand rightHand;  // Reference to the right hand
     [SerializeField] private bool mockHandUsedForPinchSelection; // Mock pinch selection for testing
     [SerializeField] private bool allowPinchSelection = true; // Allow pinch selection
     [SerializeField] private Canvas canvas; // Reference to the Canvas
 
+    [SerializeField] private Button startButton;
     private GraphicRaycaster raycaster;
     private PointerEventData pointerEventData;
-    private EventSystem eventSystem;
+    public EventSystem eventSystem;
 
     private void Start()
     {
         // Get the GraphicRaycaster and EventSystem from the Canvas
         raycaster = canvas.GetComponent<GraphicRaycaster>();
-        eventSystem = GetComponent<EventSystem>();
 
         if (raycaster == null)
         {
@@ -42,53 +43,94 @@ public class ButtonInteractionHandler : MonoBehaviour
             return;
         }
 
-        // Subscribe to button click events
-        foreach (Button button in GetComponentsInChildren<Button>())
-        {
-            button.onClick.AddListener(() => HandleButtonInteraction(button));
-        }
+        ActivateStart();
     }
 
-    public void OnButtonClick(GameObject buttonObject)
+    public void HandleButtonClick(Button button)
     {
-        Debug.Log("hey i am working");
-        Button button = buttonObject.GetComponent<Button>();
         if (button != null)
         {
             HandleButtonInteraction(button);
         }
     }
 
+    public void HandleButtonHover(Button button){
+        if (button != null){
+            button.GetComponent<Image>().color = hoverColor;
+        }
+        if(button.GetComponent<ButtonState>() == null){
+            Debug.LogError("button state is not assigned to button");
+            return;
+        }
+        button.GetComponent<ButtonState>().state = ButtonState.State.HOVER;
+    }
+
+    public void HandleButtonUnhover(Button button){
+        if(button != null){
+            button.GetComponent<Image>().color = defaultColor;
+        }
+        if(button.GetComponent<ButtonState>() == null){
+            Debug.LogError("button state is not assigned to button");
+            return;
+        }
+        button.GetComponent<ButtonState>().state = ButtonState.State.STILL;
+    }
+
+    private IEnumerator HandleStartButton(Button button){
+        yield return new WaitUntil(()=>IsRightHandPinching() == false);
+        fittsrecorder2.quizInProgress  = true;
+        // start timer
+        fittsrecorder2.startTime = DateTime.Now;
+        // Deactivate start button while quiz is in process
+        button.GetComponent<Button>().interactable = false;
+        button.GetComponent<Image>().color = defaultColor;
+    }
+
+    public void ActivateStart(){
+        if(startButton != null){
+            startButton.interactable = true;
+            startButton.GetComponent<Image>().color = Color.red;
+        }else{
+            Debug.Log("Start button in hand tracking handler is not assigned.");
+        }
+    }
+
     private void HandleButtonInteraction(Button button)
     {
         // Ensure only one button is selected at a time
-        if (lastButton != null && lastButton != button)
-        {
-            ResetButtonColor(lastButton);
-        }
+        //if (lastButton != null && lastButton != button)
+        //{
+        //    ResetButtonColor(lastButton);
+        //}
+
+        // FIXME: Move this fittrecorder2 if possible
+        //ResetButtonColor(button);
 
         // Handle button click
         distance = 0;
         Vector3 buttonCenter = button.GetComponent<RectTransform>().position;
         distance = Vector3.Distance(Camera.main.transform.position, buttonCenter);
 
-        // Update button colors
-        Image image = button.GetComponent<Image>();
-        genericColor = image.color;
-        SetButtonColor(button, selectedColor);
+        // QUESTION: Should the button be colored green for correctness
+        // Update button color to something that means CORRECT
+        // Image image = button.GetComponent<Image>();
+        // genericColor = image.color;
+        // SetButtonColor(button, selectedColor);
 
         string buttonName = button.name;
         if (buttonName.StartsWith("option") && int.TryParse(buttonName.Substring(6), out int buttonNumber))
         {
             Recorder.selec = buttonNumber;
             fittsrecorder.selec=buttonNumber;
-            fittsrecorder.btnsave=buttonNumber;
             Recorder.btnsave = buttonNumber;
-            Debug.Log($"Button selected: {Recorder.selec}");
+            if (buttonNumber == 0){
+                Debug.Log("HAND_TRACKING: I clicked Start button");
+                StartCoroutine(HandleStartButton(button));
+            }
+            Debug.Log($"HAND_TRACKING: Button selected is {Recorder.selec}");
         }
 
-
-        lastButton = button;
+        //lastButton = button;
         clicked = true;
         PinchCounter++;
     }
@@ -130,14 +172,10 @@ public class ButtonInteractionHandler : MonoBehaviour
 
     private void Update()
     {
-        if (IsRightHandPinching())
-        {
-            HandlePinch();
-        }
-        else
-        {
-            _isPinching = false;
-        }
+        // if (IsRightHandPinching())
+        // {
+        //     HandlePinch();
+        // }
     }
 
     private void HandlePinch()
@@ -155,14 +193,16 @@ public class ButtonInteractionHandler : MonoBehaviour
         // Raycast using the GraphicRaycaster and the pointer event data
         raycaster.Raycast(pointerEventData, results);
 
+        Debug.Log("HAND_TRACKING: " + results.Count);
+
         // Iterate through the results
         foreach (RaycastResult result in results)
         {
             Button button = result.gameObject.GetComponent<Button>();
+            Debug.Log("HAND_TRACKING: " + button.gameObject.name);
             if (button != null)
             {
-                OnButtonClick(button.gameObject);
-                _isPinching = true;
+                HandleButtonClick(button);
                 PinchCounter++;
                 break; // Exit loop after first button click
             }

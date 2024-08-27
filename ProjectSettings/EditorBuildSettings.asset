@@ -9,55 +9,13 @@ EditorBuildSettings:
     path: Assets/Scenes/scene manager.unity
     guid: 05dbbb49ebaa20d4b9d8efa6557d1ebe
   - enabled: 1
-    path: Assets/Scenes/pinch and move.unity
-    guid: b6d6d7119633818469f99cf7ea6003b3
-  - enabled: 1
-    path: Assets/Scenes/fixed screen 4.unity
-    guid: 052ae6c4e2768bd498f65f9290dfc8ec
-  - enabled: 1
-    path: Assets/Scenes/fixed screen.unity
-    guid: 4671fbb5da0d04c47bde2e9cfcafe00f
-  - enabled: 1
-    path: Assets/Scenes/head_track_screen.unity
-    guid: 5d5e19b8421980547a871b5320e1721a
-  - enabled: 1
-    path: Assets/Scenes/move with person.unity
-    guid: a9218c0f5a33cfe4680a53ae6bdcbc3c
-  - enabled: 1
-    path: Assets/Scenes/pinch.unity
-    guid: 9bd420d260d038b48be7f397457452a6
-  - enabled: 1
-    path: Assets/Scenes/project on palm.unity
-    guid: 26de94b834ab346459a912920bed9bb7
-  - enabled: 1
-    path: Assets/Scenes/up from palm.unity
-    guid: 1cbcfa6ca12cb8747a31b78361fb138c
-  - enabled: 1
     path: Assets/Scenes/OK.unity
     guid: ddd8a6cf7ec50134faab602e6d4acae1
-  - enabled: 1
-    path: Assets/Scenes/zero pinch.unity
-    guid: bcfa96a1360fd3d44ba350da1f157077
-  - enabled: 1
-    path: Assets/Scenes/wrist.unity
-    guid: a4eb0c20d0acd9d4f8a20b60ec4b21da
   - enabled: 1
     path: Assets/Scenes/fitt fixed screen.unity
     guid: 76bdb8b1dd7ace346bd18ef16210bc2c
   - enabled: 0
-    path: Assets/Scenes/hand ray/fitts hands/fitt head_track_screen1.unity
-    guid: 39a2b5ce1e5df424a995fc1cc6884ac4
-  - enabled: 0
-    path: Assets/Scenes/hand ray/fitts hands/fitt move with person1.unity
-    guid: 3373ae3e8998a114495c239abcdc6dcc
-  - enabled: 0
-    path: Assets/Scenes/hand ray/fitts hands/fitt pinch and move.unity
-    guid: b9486a1b6b8b77443b5206f8cafbae4a
-  - enabled: 0
-    path: Assets/Scenes/hand ray/fitts hands/fitt pinch1.unity
-    guid: 7fd6af4a577706342b45338597c6b45f
-  - enabled: 1
-    path: Assets/Scenes/fitt project on palm.unity
+    path: Assets/Scenes/fitt project on palm (deprecated).unity
     guid: eeef84fe7df50344096d4bcb85a0168b
   - enabled: 1
     path: Assets/Scenes/fitt up from palm.unity
@@ -65,21 +23,39 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/fitt wrist.unity
     guid: f02d568ad7682c342bf4027108fbd6ee
-  - enabled: 0
-    path: Assets/Scenes/hand ray/fitts hands/fitt zero pinch.unity
-    guid: 4ae4c534e4f7e934b9814906491a2cb8
   - enabled: 1
     path: Assets/Scenes/fitt head_track_screen.unity
     guid: 5387b8601bd36d146a234dbbf24740c7
-  - enabled: 1
-    path: Assets/Scenes/fitt move with person.unity
-    guid: a949d776d232a0f43be5e309c54f1bff
-  - enabled: 1
-    path: Assets/Scenes/fitt pinch and move.unity
+  - enabled: 0
+    path: Assets/Scenes/fitt pinch and move (deprecated).unity
     guid: 3f56b9035309f034f93abca22bb17389
   - enabled: 1
-    path: Assets/Scenes/fitt pinch.unity
+    path: Assets/Scenes/fitt pinch and move distance.unity
+    guid: 45e69f6aa7a653147ac95ecc5c50e413
+  - enabled: 1
+    path: Assets/Scenes/fitt wrist distance.unity
+    guid: b2a01826512e8d640b37bdbec5f2c272
+  - enabled: 1
+    path: Assets/Scenes/fitt pinch and move.unity
     guid: ec7e3b8857404c2418b3a213a6058aed
+  - enabled: 1
+    path: Assets/Scenes/fitt up from palm distance.unity
+    guid: 282bd71b332fe6c419590bf689a48820
+  - enabled: 1
+    path: Assets/Scenes/fitt move with person.unity
+    guid: be35d3fb23a08ab4db1af0d95d21bed8
+  - enabled: 1
+    path: Assets/Scenes/quiz distance pinch.unity
+    guid: cdda0acae8ce49841a8492c4c0bbd45c
+  - enabled: 1
+    path: Assets/Scenes/quiz up from palm distance.unity
+    guid: 9f67787e9d628724b900d186cde08297
+  - enabled: 1
+    path: Assets/Scenes/quiz head track.unity
+    guid: e42aabab003427b41aa870f4b0582045
+  - enabled: 1
+    path: Assets/Scenes/quiz move with person.unity
+    guid: 72ca55b677c478047b05e88e9612b945
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 70a3939c33cdddf48975072d47e634b6, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8244b43e166900844a5897876059b941, type: 2}
