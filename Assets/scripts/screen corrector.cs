@@ -16,6 +16,8 @@ public class FollowInZDirection : MonoBehaviour
     [SerializeField] private int forwardHistoryWindow = 6;
     [SerializeField] private float k1q = 0.0001f, k2q = 0.00001f, k1r = 0.1f, k2r = 0.01f;
     private DatabaseReference databaseReference;
+    [Header("Reposition from head offset")]
+    [SerializeField] private float x, y, z;
     void Start()
     {
         ResetKalmanFilters();
@@ -55,7 +57,7 @@ public class FollowInZDirection : MonoBehaviour
         // transform.rotation = Quaternion.LookRotation(transform.position - chest.position);
         Vector3 chestPosition = GetStableCanvasPosition();
         Vector3 chestForward = GetStableCanvasForward();
-        transform.SetPositionAndRotation(chestPosition + chestForward.normalized * offset, Quaternion.LookRotation(transform.position - chestPosition));
+        transform.SetPositionAndRotation(chestPosition + chestForward.normalized * offset + new Vector3(x, y, z), Quaternion.LookRotation(transform.position - chestPosition));
         // transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + offset);
     }
     private Vector3 GetStableCanvasPosition()

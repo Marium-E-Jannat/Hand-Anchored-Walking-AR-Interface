@@ -28,6 +28,10 @@ public class QuizRecorder : MonoBehaviour
     private int pinchCount = 0;
     private DateTime optionClickedTime;
     private bool wasPinching;
+    [Header("Center anchors")]
+    [SerializeField] private Transform head;
+    const string instruction1 = "Press Start to view the question.";
+    const string instruction2 = "Reorient the canvas to the center and look forward to continue.";
 
     enum status {
         ERROR,
@@ -38,6 +42,10 @@ public class QuizRecorder : MonoBehaviour
     private int correctAnswer;
     private int pickedAnswer;
     [SerializeField] private Button submitButton;
+    TMP_Text indicator;
+
+    public AudioSource audioSource;
+    public AudioSource startAudio;
 
     void Start()
     {
@@ -47,6 +55,14 @@ public class QuizRecorder : MonoBehaviour
         {
             dbReference = FirebaseDatabase.DefaultInstance.RootReference;
         });
+        if(head == null){
+            Debug.LogError("Head anchor is not set properly.");
+        }
+        if(startPanel.transform.Find("Instruction") != null){
+            indicator= startPanel.transform.Find("Instruction").GetComponent<TMP_Text>();
+        }else{
+            Debug.LogError("Start panel doesn't have Instruction child.");
+        }
         colorAtStill = optionButtons[1].colors.normalColor;
         quizInProgress = false;
         questionPanel.SetActive(false);
@@ -69,17 +85,30 @@ public class QuizRecorder : MonoBehaviour
                 submitButton.interactable = true;
             }
             if(IsIdxFingerPinching()){
+                // audioSource.Play();
                 pinchCount += 1;
             }
         } else{
             startPanel.SetActive(true);
+            questionPanel.SetActive(false);
+            if(isHeadCenter()){
+                indicator.text = instruction1;
+                indicator.color = Color.black;
+            }else{
+                indicator.text = instruction2;
+                indicator.color = Color.yellow;
+            }
             if(AnswerLocation.Instance != null){
                 AnswerLocation.Instance.SuspendText();
             }else{
                 Debug.LogError("Answer location is not assigned to an object");
             }
-            questionPanel.SetActive(false);
         }
+    }
+
+    private bool isHeadCenter(){
+        Vector3 headRotation = head.rotation.eulerAngles;
+        return headRotation.y > -10f && headRotation.y < 10f;
     }
 
     private void SetButtonColor(Button button, Color color)
@@ -111,6 +140,11 @@ public class QuizRecorder : MonoBehaviour
     }
 
     public void OnStartClicked(Button button){
+        if(!isHeadCenter()){
+            return;
+        }
+
+        // startAudio.Play();
         if(prevButtonClicked != null){
             ResetButtonColor(prevButtonClicked);
         }
@@ -200,7 +234,7 @@ public class QuizRecorder : MonoBehaviour
         }
 
         // questionText.text = question;
-        questionText.text = "x=?";
+        questionText.text = "x+0=?";
         // Reset colors for all buttons
         for (int i = 0; i < 4; i++)
         {
@@ -239,8 +273,9 @@ public class QuizRecorder : MonoBehaviour
     {
         bool result = false;
         if(rightHand != null){
-            result = !wasPinching && rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
-            wasPinching = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+            var nowPinching = rightHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+            result = !wasPinching && nowPinching;
+            wasPinching = nowPinching;
         }
         return result;
     }
